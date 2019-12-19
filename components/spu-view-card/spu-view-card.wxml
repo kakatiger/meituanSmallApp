@@ -1,0 +1,17 @@
+<view bindtap="imgClickCallback" data-index="{{index}}" data-spuid="{{spu.spu_id}}">
+    <view class="food-list-item">
+        <image class="food-list-picture" mode="aspectFill" src="{{spu.picture||'/img/icons/no-shopImg.png'}}"></image>
+        <view class="food-list-info-box">
+            <view class="overflow food-name-wrap">
+                <image class="discount-icon" src="{{spu.icon_url||spu.food_label_url}}" wx:if="{{spu.icon_url||spu.food_label_url}}"></image>
+                <view class="food-name ellipsis">{{spu.name}}</view>
+            </view>
+            <view class="cart-food-subdtl ellipsis" wx:if="{{spu.attrInfo}}">{{spu.attrInfo}}</view>
+            <view class="food-number ellipsis">x{{spu.count}}</view>
+        </view>
+        <view class="food-list-price-box">
+            <view class="food-price ellipsis">{{spu.sub_total||(spu._sub_total_price?'¥'+spu._sub_total_price:'')}}</view>
+            <view class="food-origin-price ellipsis" wx:if="{{spu.original_price!==spu.price}}">¥{{spu._sub_original_price}}</view>
+        </view>
+    </view>
+</view>

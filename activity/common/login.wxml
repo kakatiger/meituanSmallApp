@@ -1,0 +1,55 @@
+<view wx:if="{{loginPopup}}">
+    <view class="loginBox no-auth" wx:if="{{isshowAuth}}">
+        <button bindgetuserinfo="bindGetUserInfo" bindtap="toOpenAuth" class="auth-btn" openType="getUserInfo">
+            <view class="kai"></view>
+        </button>
+        <view class="auth-text">点击按钮开启授权</view>
+    </view>
+    <view class="loginBox" wx:if="{{isshowLogin}}">
+        <view class="login-text">登录后即可领取</view>
+        <view class="captureInputBox">
+            <input bindconfirm="{{LoginMobileText?'onLoginMobileConfirm':''}}" bindinput="onLoginMobileInput" class="login-input" placeholder="请输入您的手机号码" type="number" value="{{LoginMobileText}}"></input>
+            <view bindtap="clearPhone" class="clear-phone" wx:if="{{isShowClearPhoneBtn}}"></view>
+        </view>
+        <view class="login-tip">如果您没有用这个手机号码注册过美团，我们将为您创建美团账号</view>
+        <button bindtap="onClickGetCodeBtn" class="getCapture {{disableCapture?'disable':''}}">获取验证码</button>
+        <view class="other-tip">其他登录方式</view>
+        <button bindgetphonenumber="getPhoneNumber" bindtap="getPhone" class="quick-login" openType="getPhoneNumber">微信快捷登录</button>
+    </view>
+    <view class="loginBox" style="{{!imgCapture?'display: none':''}}" wx:if="{{isShowImgCapture}}">
+        <view class="login-text">登录后即可领取</view>
+        <view class="captureInputBox">
+            <input bindconfirm="{{inputCaptcha?'onCaptchInputConfirm':''}}" bindinput="onLoginCaptchInput" class="login-input" name="login-mobile" placeholder="请输入图片验证码" value="{{inputCaptchaValue}}"></input>
+            <view class="login-tip">请输入图片验证码 <span bindtap="changePhone" class="see">修改></span>
+            </view>
+            <image bindtap="changeCaptch" class="loginCaptch" src="{{captchUrl}}"></image>
+        </view>
+        <button bindtap="onClickGetCodeBtn" class="getCapture {{disableCapture?'disable':''}}">确认</button>
+        <view class="other-tip">其他登录方式</view>
+        <button bindgetphonenumber="getPhoneNumber" bindtap="getPhone" class="quick-login" openType="getPhoneNumber">微信快捷登录</button>
+    </view>
+    <view class="loginBox" style="{{!inputCapture?'display: none':''}}" wx:if="{{isshowGetCapture}}">
+        <view class="login-text">登录后即可领取</view>
+        <view class="captureInputBox">
+            <input bindconfirm="{{VerifyCodeText?'onLoginVerifyConfirm':''}}" bindinput="onLoginVerifyCodeInput" class="login-input" placeholder="请输入验证码" type="number" value="{{VerifyCodeText}}"></input>
+            <view class="login_mobile_countdown" wx:if="{{login_mobile_countdown}}">{{login_mobile_seconds}}S</view>
+            <view bindtap="onClickGetCodeBtn" class="login_mobile_countdown re_get" data-type="reGet" wx:if="{{login_reget}}">重新获取</view>
+        </view>
+        <view class="login-tip">{{loginMobileTips}} <span bindtap="changePhone" class="see">修改></span>
+        </view>
+        <button bindtap="onClickSendCodeBtn" class="getCapture {{disableCapture?'disable':''}}">立即领取</button>
+        <view class="other-tip">其他登录方式</view>
+        <button bindgetphonenumber="getPhoneNumber" bindtap="getPhone" class="quick-login" openType="getPhoneNumber">微信快捷登录</button>
+    </view>
+    <view class="loginBox" wx:if="{{changePhone}}">
+        <view class="login-text">修改代金券/红包领取账号</view>
+        <view class="now-phone">当前账号: {{nowPhone}}</view>
+        <view class="captureInputBox">
+            <input bindconfirm="{{LoginMobileText?'onLoginMobileConfirm':''}}" bindinput="onLoginMobileInput" class="login-input" placeholder="请输入手机号码" type="number" value="{{LoginMobileText}}"></input>
+            <view bindtap="clearPhone" class="clear-phone" wx:if="{{isShowClearPhoneBtn}}"></view>
+        </view>
+        <view class="login-tip">修改后,下次领取的代金券/红包自动放入新手机号</view>
+        <button bindtap="onClickGetCodeBtn" class="getCapture sure-change {{disableCapture?'disable':''}}">确认修改</button>
+        <view bindtap="cancelChange" class="cancel-change">取消</view>
+    </view>
+</view>

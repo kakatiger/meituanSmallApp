@@ -1,0 +1,12 @@
+<view bindtap="onClickBackdrop" class="ui-modal-backdrop">
+    <view catchtap="preventTapBubble" class="ui-modal {{moveup?'moveup':''}}">
+        <view class="ui-modal-content">
+            <view class="ui-modal-message"> {{message||'外卖送餐需要您的地理位置'}} </view>
+        </view>
+        <view class="ui-modal-controls">
+            <view catchtap="onClickCancel" class="ui-modal-cancel"> {{textCancel||'取消'}} </view>
+            <view bindtap="onClickOk" class="ui-modal-confirm ui-modal-confirm-border" wx:if="{{!useButton}}"> {{textOk||'去开启'}} </view>
+            <button bindgetuserinfo="openSettingSuccCb" bindopensetting="openSettingSuccCb" bindtap="onClickOk" class="ui-modal-confirm ui-modal-confirm-border" openType="{{openType}}" wx:else> {{textOk||'去开启'}} </button>
+        </view>
+    </view>
+</view>

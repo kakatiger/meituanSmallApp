@@ -1,0 +1,90 @@
+<template name="search-poi-item">
+    <import src="./poi-products.wxml"></import>
+    <view class="poi-item-outer">
+        <view class="poi-item {{item.product_list.length===1?'poi-item-products-1':item.product_list.length>1?'poi-item-more':''}} {{isShopTemplate&&item.status===3?'poi-item-rest-now':''}}">
+            <view class="poi-img {{isDishTemplate?'poi-good-promo':''}}" style="background-image:url({{item.pic_url?item.pic_url:'/img/icons/no-shopImg.png'}})">
+                <view class="poi-icon" style="background-image:{{'url('+item.poi_type_icon+')'}}" wx:if="{{isShopTemplate&&item.poi_type_icon}}"></view>
+                <wm-image class="poi-promo" defaultImgSrc="../../img/icons/poi-promo-default.png" src="{{item.poi_promotion_pic}}" wx:if="item.poi_promotion_pic"></wm-image>
+                <view class="ad-type {{item.status===3&&isShopTemplate?'ad-type-rest':''}}" wx:if="{{item.ad_type&&(item.ad_type===6||item.ad_type===11)}}"></view>
+                <view class="poi-bottom-banner" wx:if="{{isShopTemplate&&item.status==3&&item.status_desc}}">{{item.status_desc}}</view>
+            </view>
+            <view class="poi-info">
+                <block wx:if="{{isShopTemplate}}">
+                    <view class="poi-row poi-row-head">
+                        <view class="poi-name">
+                            <text class="{{item.highLight===true?'poi-name-highlight':''}}" wx:for="{{item.name}}" wx:key="{{index}}">{{item.name}}</text>
+                        </view>
+                    </view>
+                    <view class="poi-row poi-row-sales poi-row-sales-state" wx:if="{{item.shipping_time_info}}">
+                        <view class="poi-status-tag {{item.shipping_time_info.reservation_status===1?'poi-status-tag-orderonly':'poi-status-tag-order'}}"> {{item.shipping_time_info.status_content}} </view>
+                        <view class="poi-status-tag poi-status-desc {{item.shipping_time_info.reservation_status===1?'poi-status-text-orderonly':'poi-status-text-order'}}"> {{item.shipping_time_info.desc_content}} </view>
+                    </view>
+                    <view class="poi-row poi-row-sales">
+                        <template is="score" data="{{score:item.wm_poi_score}}"></template>
+                        <view class="poi-score">{{item.wm_poi_score==0?'':item.wm_poi_score}}</view>
+                        <view class="poi-sales">{{item.month_sales_tip}}</view>
+                        <view class="poi-distance-estimate">
+                            <block wx:if="{{item.delivery_time_tip}}">
+                                <view>{{item.delivery_time_tip}}</view>
+                                <view class="poi-line"></view>
+                            </block>
+                            <view class="poi-distance">{{item.distance}}</view>
+                        </view>
+                    </view>
+                    <view class="poi-row poi-row-ship">
+                        <view class="poi-price">{{item.min_price_tip}}</view>
+                        <view class="poi-line"></view>
+                        <view class="poi-ship">{{item.shipping_fee_tip}}</view>
+                        <view class="poi-orig-ship" wx:if="{{item.origin_shipping_fee_tip}}">{{item.origin_shipping_fee_tip}}</view>
+                        <image class="poi-deliver" src="/img/icons/deliver.png" wx:if="{{item.delivery_type===1}}"></image>
+                    </view>
+                </block>
+                <block wx:elif="{{isDishTemplate}}">
+                    <view class="poi-row poi-row-head">
+                        <view class="poi-icon poi-good-icon" style="background-image:{{'url('+item.poi_type_icon+')'}}" wx:if="{{item.poi_type_icon}}"></view>
+                        <view class="poi-name poi-good-name">
+                            <text class="{{item.highLight===true?'poi-name-highlight':''}}" wx:for="{{item.name}}" wx:key="{{index}}">{{item.name}}</text>
+                        </view>
+                        <block wx:if="{{item.delivery_time_tip}}">
+                            <view>{{item.delivery_time_tip}}</view>
+                            <view class="poi-line"></view>
+                        </block>
+                        <view class="poi-distance">{{item.distance}}</view>
+                    </view>
+                    <view class="poi-row poi-row-sales {{item.shipping_time_info?'poi-row-sales-state':''}}">
+                        <block wx:if="{{item.shipping_time_info}}">
+                            <view class="poi-status-tag {{item.shipping_time_info.reservation_status===1?'poi-status-tag-orderonly':'poi-status-tag-order'}}"> {{item.shipping_time_info.status_content}} </view>
+                            <view class="poi-status-tag poi-status-desc {{item.shipping_time_info.reservation_status===1?'poi-status-text-orderonly':'poi-status-text-order'}}"> {{item.shipping_time_info.desc_content}} </view>
+                        </block>
+                        <block wx:else>
+                            <block wx:if="{{item.status===1}}">
+                                <view class="poi-sales poi-good-sales">{{item.month_sales_tip}}</view>
+                                <view class="poi-line"></view>
+                                <view class="poi-price">{{item.min_price_tip}}</view>
+                                <view class="poi-line"></view>
+                                <view class="poi-ship">{{item.shipping_fee_tip}}</view>
+                                <view class="poi-orig-ship" wx:if="{{item.origin_shipping_fee_tip}}">{{item.origin_shipping_fee_tip}}</view>
+                            </block>
+                            <view class="poi-status-tag poi-status-tag-closed" wx:if="{{item.status===3}}"> {{item.status_desc}} </view>
+                        </block>
+                        <view class="poi-distance-estimate">
+                            <image class="poi-deliver" src="/img/icons/deliver.png" wx:if="{{item.delivery_type===1}}"></image>
+                        </view>
+                    </view>
+                </block>
+                <view class="poi-recommend flex-center {{!recommendIdx?'with-icon':''}}" wx:if="{{isShopTemplate&&item.recommend_list&&item.recommend_list.length}}" wx:for="{{item.recommend_list}}" wx:for-index="recommendIdx" wx:for-item="recommendInfo">
+                    <image class="icon" src="/img/icons/zan.png" wx:if="{{!recommendIdx}}"></image>
+                    <view class="poi-recommend-txt">{{recommendInfo.recommend_reason}}</view>
+                </view>
+                <view catchtap="{{isShopTemplate&&item.label_info.length<=5||isDishTemplate&&item.label_info.length<=6?'':'onClickPoilistActvs'}}" class="poi-shop-service {{poilistActvsShown[item.id]?'poi-shop-service-spread':''}}" data-id="{{item.id}}" wx:if="{{item.label_info&&item.label_info.length}}">
+                    <view class="poi-arrow poi-arrow-shop-service {{poilistActvsShown[item.id]?'ui-arrow ui-arrow-up':'ui-arrow ui-arrow-down'}}" wx:if="{{isShopTemplate&&item.label_info.length>5||isDishTemplate&&item.label_info.length>6}}"></view>
+                    <view class="poi-refund-tag flex-center" hidden="{{idx>4&&!poilistActvsShown[item.id]}}" style="color:{{labelInfo.content_color}};border-color:{{labelInfo.label_frame_color}};" wx:if="{{item.label_info}}" wx:for="{{item.label_info}}" wx:for-index="idx" wx:for-item="labelInfo" wx:key="{{labelInfo.content}}"> {{labelInfo.content}} </view>
+                </view>
+                <view wx:if="{{item.product_list.length>0}}">
+                    <template is="poi-products" data="{{item:item,index:index,template:template,productShown:productShown,env:env,lch:lch,uuid:uuid,isShopTemplate:isShopTemplate,isDishTemplate:isDishTemplate}}"></template>
+                </view>
+            </view>
+        </view>
+    </view>
+</template>
+<import src="../../../components/score/score.wxml"></import>

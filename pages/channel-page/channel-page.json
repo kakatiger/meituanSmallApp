@@ -1,0 +1,12 @@
+{
+    "navigationBarBackgroundColor": "#FAFAFA",
+    "navigationBarTitleText": "美团外卖",
+    "enablePullDownRefresh": true,
+    "backgroundColor": "#FAFAFA",
+    "backgroundTextStyle": "dark",
+    "usingComponents": {
+        "midas": "../../components/midas/index",
+        "wm-navigator": "../../npm/@wmfe/wxapp-component-navigator/src/components/index",
+        "wm-image": "../../components/wm-image/index"
+    }
+}

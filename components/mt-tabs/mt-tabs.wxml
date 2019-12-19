@@ -1,0 +1,17 @@
+<view class="mt-tabs-wrap" wx:if="{{mtTopShow}}">
+    <mina-navigate appId="wxde8ac0a21135c07d" class="flex-item" extraData="{{mtTabsExtraData}}" path="/index/pages/search/search?cateId=1" version="develop">
+        <view class="mt-tab-item">吃美食</view>
+    </mina-navigate>
+    <view class="flex-item active">
+        <view class="mt-tab-item">点外卖</view>
+    </view>
+    <mina-navigate appId="wxde8ac0a21135c07d" class="flex-item" extraData="{{mtTabsExtraData}}" path="/index/pages/movie/index" version="develop">
+        <view class="mt-tab-item">看电影</view>
+    </mina-navigate>
+    <mina-navigate appId="wxde8ac0a21135c07d" class="flex-item" extraData="{{mtTabsExtraData}}" path="/index/pages/hotel/index" version="develop">
+        <view class="mt-tab-item">住酒店</view>
+    </mina-navigate>
+    <mina-navigate appId="wxde8ac0a21135c07d" class="flex-item" extraData="{{mtTabsExtraData}}" path="/ticket/pages/index/index" version="develop">
+        <view class="mt-tab-item">买门票</view>
+    </mina-navigate>
+</view>

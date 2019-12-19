@@ -1,0 +1,80 @@
+<template name="poi-products">
+    <view class="poi-modal" wx:if="{{isShopTemplate}}">
+        <view catchtap="onClickPoiProduct" data-index="{{index}}" data-poi="{{item}}" data-product="{{foodItem}}" data-spu_index="{{foodIndex}}" wx:if="{{foodIndex<3}}" wx:for="{{item.product_list}}" wx:for-index="foodIndex" wx:for-item="foodItem" wx:key="{{foodItem.product_spu_id}}">
+            <midas adidx="{{index+1}}" clickExtra="event_id={{item.search_result_type===0?'b_IDNii':item.search_result_type===1?'b_W0kxz':item.search_result_type===2?'b_HTbEQ':''}}" env="{{env==='qa'?'beta':'product'}}" extra="spu_id={{foodItem.product_spu_id}}&wm_did={{uuid}}&wm_ctype=wxapp&lch={{lch||'wx'}}" feedback="{{item.charge_info}}" impressionExtra="event_id={{item.search_result_type===0?'b_GTOR0':item.search_result_type===1?'b_HN5XY':item.search_result_type===2?'b_ZCYtX':''}}" serverType="meituan_waimai" wx:if="{{item.ad_type&&item.ad_type!=0}}">
+                <view style="position: relative">
+                    <image class="poi-food-img" mode="aspectFill" src="{{foodItem.picture?foodItem.picture:'/img/icons/no-food-img.png'}}"></image>
+                    <view class="recommend-icon add-recommend-icon-poi" wx:if="{{foodItem.product_recommend_label}}">{{foodItem.product_recommend_label}}</view>
+                </view>
+                <view>
+                    <view class="{{itemName.highLight===true?'poi-name-highlight':''}}" wx:for="{{foodItem.product_name}}" wx:for-item="itemName" wx:key="{{index}}">
+                        <view class="food-name poi-food-name">{{itemName.name}}</view>
+                    </view>
+                    <view class="poi-food-price">
+                        <text class="poi-food-discount-price">¥{{foodItem.price}}</text>
+                        <text class="poi-food-normal-price" wx:if="{{foodItem.original_price!==foodItem.price}}">¥{{foodItem.original_price}}</text>
+                    </view>
+                </view>
+            </midas>
+            <view wx:else>
+                <view style="position: relative">
+                    <image class="poi-food-img" mode="aspectFill" src="{{foodItem.picture?foodItem.picture:'/img/icons/no-food-img.png'}}"></image>
+                    <view class="recommend-icon add-recommend-icon-poi" wx:if="{{foodItem.product_recommend_label}}">{{foodItem.product_recommend_label}}</view>
+                </view>
+                <view>
+                    <view class="{{itemName.highLight===true?'poi-name-highlight':''}}" wx:for="{{foodItem.product_name}}" wx:for-item="itemName" wx:key="{{index}}">
+                        <view class="food-name poi-food-name">{{itemName.name}}</view>
+                    </view>
+                    <view class="poi-food-price">
+                        <text class="poi-food-discount-price">¥{{foodItem.price}}</text>
+                        <text class="poi-food-normal-price" wx:if="{{foodItem.original_price!==foodItem.price}}">¥{{foodItem.original_price}}</text>
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+    <view wx:if="{{isDishTemplate}}">
+        <view catchtap="onClickPoiProduct" data-index="{{index}}" data-poi="{{item}}" data-product="{{foodItem}}" data-spu_index="{{foodIndex}}" hidden="{{foodIndex>1&&!productShown[item.id]||foodIndex>5&&productShown[item.id]}}" style="margin-bottom: 20rpx" wx:for="{{item.product_list}}" wx:for-index="foodIndex" wx:for-item="foodItem" wx:key="{{foodItem.product_spu_id}}">
+            <midas adidx="{{index+1}}" clickExtra="event_id={{item.search_result_type===0?'b_IDNii':item.search_result_type===1?'b_W0kxz':item.search_result_type===2?'b_HTbEQ':''}}" env="{{env==='qa'?'beta':'product'}}" extra="spu_id={{foodItem.product_spu_id}}&wm_did={{uuid}}&wm_ctype=wxapp&lch={{lch||'wx'}}" feedback="{{item.charge_info}}" impressionExtra="event_id={{item.search_result_type===0?'b_GTOR0':item.search_result_type===1?'b_HN5XY':item.search_result_type===2?'b_ZCYtX':''}}" serverType="meituan_waimai" wx:if="{{item.ad_type&&item.ad_type!=0}}">
+                <view class="poi-modal">
+                    <image class="poi-food-img" mode="aspectFill" src="{{foodItem.picture?foodItem.picture:'/img/icons/no-food-img.png'}}"></image>
+                    <view class="recommend-icon" wx:if="{{foodItem.product_recommend_label}}">{{foodItem.product_recommend_label}}</view>
+                    <view class="product-food-flex">
+                        <view>
+                            <view class="{{itemName.highLight===true?'poi-name-highlight':''}}" wx:for="{{foodItem.product_name}}" wx:for-item="itemName" wx:key="{{index}}">
+                                <view class="food-name product-food-name">{{itemName.name}}</view>
+                            </view>
+                            <view class="product-food-recommend-info">月售{{foodItem.month_sales}}<text class="slot">{{foodItem.praise_content}}</text>
+                            </view>
+                        </view>
+                        <view class="poi-food-price">
+                            <text class="poi-food-discount-price">¥{{foodItem.price}}</text>
+                            <text class="poi-food-normal-price" wx:if="{{foodItem.original_price!==foodItem.price}}">¥{{foodItem.original_price}}</text>
+                        </view>
+                    </view>
+                </view>
+            </midas>
+            <view class="poi-modal" wx:else>
+                <image class="poi-food-img" mode="aspectFill" src="{{foodItem.picture?foodItem.picture:'/img/icons/no-food-img.png'}}"></image>
+                <view class="recommend-icon" wx:if="{{foodItem.product_recommend_label}}">{{foodItem.product_recommend_label}}</view>
+                <view class="product-food-flex">
+                    <view>
+                        <view class="{{itemName.highLight===true?'poi-name-highlight':''}}" wx:for="{{foodItem.product_name}}" wx:for-item="itemName" wx:key="{{index}}">
+                            <view class="food-name product-food-name">{{itemName.name}}</view>
+                        </view>
+                        <view class="product-food-recommend-info">月售{{foodItem.month_sales}}<text class="slot">{{foodItem.praise_content}}</text>
+                        </view>
+                    </view>
+                    <view class="poi-food-price">
+                        <text class="poi-food-discount-price">¥{{foodItem.price}}</text>
+                        <text class="poi-food-normal-price" wx:if="{{foodItem.original_price!==foodItem.price}}">¥{{foodItem.original_price}}</text>
+                    </view>
+                </view>
+            </view>
+        </view>
+        <view catchtap="onClickMoreProduct" class="product-food-more" data-id="{{item.id}}" wx:if="{{item.product_list.length>2}}">
+            <view>{{productShown[item.id]?'收起':'展开所有'+(item.product_list.length>6?6:item.product_list.length)+'个商品'}}</view>
+            <view class="ui-arrow product-food-more-icon {{productShown[item.id]?'ui-arrow-up':'ui-arrow-down'}}"></view>
+        </view>
+    </view>
+</template>

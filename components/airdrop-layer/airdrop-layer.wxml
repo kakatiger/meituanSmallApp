@@ -1,0 +1,8 @@
+<view wx:if="{{showAirdropLayer}}">
+    <view bindtap="closeLayer" class="airdrop-layer-mask">
+        <view class="close-btn-wrap">
+            <view bindtap="closeLayer" class="close-btn"></view>
+        </view>
+        <view catchtap="onClickLayer" class="airdrop-layer-box" style="background:url('{{airdropLayerData.picUrl}}') no-repeat;background-size: contain;background-position-x:center;"></view>
+    </view>
+</view>

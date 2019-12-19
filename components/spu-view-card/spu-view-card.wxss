@@ -1,0 +1,84 @@
+.food-list-item {
+    padding: 20rpx;
+    margin: 10rpx 0;
+    background: #F8F8F8;
+    overflow: hidden;
+}
+
+.food-list-item:nth-of-type(1) {
+}
+
+.food-list-picture {
+    width: 110rpx;
+    height: 110rpx;
+    margin-right: 20rpx;
+    float: left;
+}
+
+.food-list-info-box {
+    height: 110rpx;
+    float: left;
+}
+
+.overflow {
+    overflow: hidden;
+}
+
+.food-name-wrap {
+    line-height: 30rpx;
+}
+
+.discount-icon {
+    width: 30rpx;
+    height: 30rpx;
+    margin-right: 10rpx;
+    float: left;
+}
+
+.food-name {
+    width: 300rpx;
+    min-width: 0;
+    float: left;
+    font-size: 28rpx;
+    color: #333333;
+    letter-spacing: 0.4px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.cart-food-subdtl {
+    width: 200rpx;
+    line-height: 33rpx;
+    margin-top: 5rpx;
+    color: #999;
+}
+
+.food-number {
+    width: 100rpx;
+    line-height: 33rpx;
+    margin-top: 5rpx;
+    color: #999;
+    font-size: 24rpx;
+    letter-spacing: 0.34px;
+}
+
+.food-list-price-box {
+    float: right;
+}
+
+.food-price,.food-origin-price {
+    width: 130rpx;
+    text-align: right;
+}
+
+.food-origin-price {
+    text-decoration: line-through;
+    color: #999;
+    font-size: 24rpx;
+    margin-top: 10rpx;
+}
+
+.food-origin-price-show {
+    visibility: visible;
+}

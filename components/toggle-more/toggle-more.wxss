@@ -1,0 +1,48 @@
+.food-list {
+}
+
+.show_more_food {
+    width: 146rpx;
+    height: 50rpx;
+    display: inline-block;
+    line-height: 50rpx;
+    text-align: center;
+    color: #666;
+    border-radius: 4rpx;
+    margin-left: 50%;
+    margin-top: 30rpx;
+    transform: translateX(-50%);
+    margin-bottom: 10rpx;
+}
+
+.show_more_food:after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200%;
+    height: 200%;
+    border: 2rpx solid #C4C4C4;
+    transform: scale(0.5);
+    transform-origin: 0 0;
+    pointer-events: none;
+    box-sizing: border-box;
+    border-radius: 4rpx;
+}
+
+.show_more_food_text {
+    font-size: 24rpx;
+}
+
+.show_more_food_img {
+    height: 20rpx;
+    width: 20rpx;
+    margin-left: 6rpx;
+    margin-bottom: 0;
+    transform: rotate(180deg);
+}
+
+.show_more_food_img.trans {
+    transform: rotate(0deg);
+}

@@ -1,0 +1,10 @@
+{
+    "disableScroll": true,
+    "navigationBarTextStyle": "white",
+    "navigationBarBackgroundColor": "#333333",
+    "usingComponents": {
+        "cart": "../../components/cart/cart",
+        "business-header": "/components/business-header/business-header",
+        "food-count-unit": "../../components/food-count-unit/food-count-unit"
+    }
+}

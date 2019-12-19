@@ -1,0 +1,19 @@
+var MUTEX_TYPE = ({
+    NOT_TAG: 0,
+    MUTEX: 1,
+    SHARE: 2,
+});
+var getMutexType = (function(key) {
+    switch (key) {
+        case 1:
+            return ('互斥券');
+        case 2:
+            return ('同享券');
+        default:
+            return ('');
+    }
+});
+module.exports = ({
+    MUTEX_TYPE: MUTEX_TYPE,
+    getMutexType: getMutexType,
+});

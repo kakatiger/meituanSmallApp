@@ -1,0 +1,5 @@
+<navigator class="navigator-class" url="{{url}}">
+    <view bindtap="onTab" class="view-class">
+        <slot></slot>
+    </view>
+</navigator>

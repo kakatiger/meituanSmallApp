@@ -1,0 +1,8 @@
+<view>
+    <navigator appId="{{appId}}" bindtap="onClick" extraData="{{extraData}}" openType="navigate" path="{{path}}" target="miniProgram" version="{{version}}" wx:if="{{useNavigator}}">
+        <slot></slot>
+    </navigator>
+    <view bindtap="onClick" wx:else>
+        <slot></slot>
+    </view>
+</view>

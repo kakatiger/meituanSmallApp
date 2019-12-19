@@ -1,0 +1,12 @@
+<template name="common-share">
+    <view class="common-share {{isIpx?'is-ipx':''}}" wx:if="{{show}}">
+        <button bindgetuserinfo="onClickToAuthroize" class="authorize-btn" openType="getUserInfo" wx:if="{{!isUserAuthorized}}"></button>
+        <view bindtap="onClickBuyTogetherShare" class="together-share">
+            <button class="btn" hoverClass="none" id="buytogether" openType="share">
+                <image alt="" class="icon" src="/img/icons/buy-together-entrance-icon.png"></image>
+                <text class="btn-title">邀请拼单</text>
+            </button>
+            <view bindtap="toLogin" class="transparent-layer" wx:if="{{showLoginLayer}}"></view>
+        </view>
+    </view>
+</template>

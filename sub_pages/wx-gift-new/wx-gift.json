@@ -1,0 +1,8 @@
+{
+    "navigationBarTitleText": "美团外卖",
+    "disableScroll": false,
+    "enablePullDownRefresh": false,
+    "usingComponents": {
+        "couponLayer": "./components/coupon-layer/coupon-layer"
+    }
+}

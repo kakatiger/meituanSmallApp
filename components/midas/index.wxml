@@ -1,0 +1,5 @@
+<view>
+    <view bindtap="onClick" class="midas-wraper">
+        <slot></slot>
+    </view>
+</view>

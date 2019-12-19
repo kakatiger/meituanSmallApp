@@ -1,0 +1,12 @@
+<view class="pindan-progress" wx:if="{{enable&&list&&list.length>2}}">
+    <view class="pindan-progress-iconline">
+        <image class="pindan-progress-img" src="{{list[0].icon||'/img/icons/p-progress-1.png'}}"></image>
+        <image class="pindan-progress-dvd" src="/img/icons/dvd.png"></image>
+        <image class="pindan-progress-img" src="{{list[1].icon||'/img/icons/p-progress-2-g.png'}}"></image>
+        <image class="pindan-progress-dvd" src="{{list[2].status===1?'/img/icons/dvd.png':'/img/icons/dvd-grey.png'}}"></image>
+        <image class="pindan-progress-img" src="{{list[2].icon||'/img/icons/p-progress-3-g.png'}}"></image>
+    </view>
+    <view class="pindan-progress-stateline">
+        <view class="pindan-progress-word {{item.status==1?'import-word':''}}" wx:for="{{list}}">{{item.desc}}</view>
+    </view>
+</view>

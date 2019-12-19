@@ -1,0 +1,48 @@
+<template name="my-list-item">
+    <view class="my-list-item">
+        <image class="my-list-item-icon" src="{{img}}"></image>
+        <view class="my-list-item-text"> {{text}} </view>
+        <view class="my-list-item-subtext" wx:if="{{subText}}"> {{subText}} </view>
+        <view class="my-list-item-desc ellipsis" wx:if="{{desc}}"> {{desc}} </view>
+        <image class="my-list-item-jump" src="/img/icons/jump.png"></image>
+    </view>
+</template>
+<view class="page-container">
+    <include src="../base.wxml"></include>
+    <view bindtap="onClickAvatar" class="user-header">
+        <image class="user-img" mode="aspectFill" src="{{avatarurl||'/img/icons/mine-image-new.png'}}"></image>
+        <view wx:if="{{hasLogin}}">
+            <view class="user-name ellipsis"> {{username||'美团用户'}} </view>
+            <view class="user-phone ellipsis" wx:if="{{mobile}}"> {{mobile}} </view>
+        </view>
+        <view class="btn-user" wx:else> 登录/注册 </view>
+    </view>
+    <view class="my-list-group">
+        <view bindtap="onClickNav" class="my-list-item-nav my-list-item-border {{hasLogin?'':'no-login'}}" data-type="coupons">
+            <template is="my-list-item" data="{{text:'美团红包',img:'/img/icons/envelop.png'}}"></template>
+            <view class="my-coupons-num" wx:if="{{hasLogin&&couponNum}}">{{couponNum}}</view>
+        </view>
+        <view bindtap="onClickNav" class="my-list-item-nav my-list-item-border {{hasLogin?'':'no-login'}}" data-type="poiCoupons">
+            <template is="my-list-item" data="{{text:'商家代金券',img:'/img/icons/poi-coupon.png'}}"></template>
+            <view class="my-coupons-num my-cash-coupons-num" wx:if="{{hasLogin&&poiCouponNum}}">{{poiCouponNum}}</view>
+        </view>
+        <view bindtap="onClickNav" class="my-list-item-nav my-list-item-border {{hasLogin?'':'no-login'}}" data-type="address">
+            <template is="my-list-item" data="{{text:'我的地址',img:'/img/icons/mine-near.png'}}"></template>
+        </view>
+        <view bindtap="onClickNav" class="my-list-item-nav my-list-item-border {{hasLogin?'':'no-login'}}" data-type="invite" wx:if="{{invite_reward_is_show&&invite_reward_url}}">
+            <template is="my-list-item" data="{{text:'邀请有奖',img:'/img/icons/mine-invite.png'}}"></template>
+        </view>
+        <view bindtap="onClickNav" class="my-list-item-nav my-list-item-border {{hasLogin?'':'no-login'}}" data-type="online-service" wx:if="{{online_service_is_show&&online_service_url}}">
+            <template is="my-list-item" data="{{text:'客服中心',img:'/img/icons/customer-service-mine.png'}}"></template>
+        </view>
+        <view bindtap="onClickNav" class="my-list-item-nav my-list-item-border" data-type="help" wx:if="{{help_feedback_is_show&&help_feedback_url}}">
+            <template is="my-list-item" data="{{text:'帮助和反馈',img:'/img/icons/help.png'}}"></template>
+        </view>
+        <view bindtap="onClickNav" class="my-list-item-nav my-list-item-border" data-type="agreement" wx:if="{{agree_explain_is_show&&agree_explain_url}}">
+            <template is="my-list-item" data="{{text:'协议和说明',img:'/img/icons/agreement.png'}}"></template>
+        </view>
+    </view>
+    <view class="my-list-group">
+        <view bindtap="onClickLogout" class="my-list-item flex-center" wx:if="{{hasLogin}}"> 退出账号 </view>
+    </view>
+</view>

@@ -1,0 +1,8 @@
+{
+    "navigationBarTextStyle": "white",
+    "navigationBarBackgroundColor": "#333333",
+    "usingComponents": {
+        "ad-top": "../../../../../components/b_client/ad-top/ad-top",
+        "ad-list": "../../../../../components/b_client/ad-list/ad-list"
+    }
+}

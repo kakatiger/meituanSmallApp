@@ -1,0 +1,46 @@
+<view class="detail-list">
+    <block wx:if="{{isUserList}}">
+        <view class="detail-item {{noSeparate?'no-separate':''}}" wx:for="{{toggleList}}" wx:key="{{item.user_name}}">
+            <view class="detail-item-header">
+                <view class="user-icon-box">
+                    <image class="user-icon" src="{{item.user_icon||'/img/icons/mine-image-new.png'}}"></image>
+                </view>
+                <view class="user-name overflow" wx:if="{{statusData&&statusData.order_status&&isPindanParticipant&&item.user_name&&index===0}}">我应支付：</view>
+                <view class="user-name overflow" wx:else>{{item.user_name}}</view>
+                <view class="total-pay-pricetxt" wx:if="{{statusData&&statusData.order_status&&isPindanParticipant&&item.user_name&&index===0}}">¥{{item.total_price}}</view>
+                <view class="user-desc" wx:else>{{item.user_desc}}</view>
+                <view class="user-buttonlist" wx:if="{{item.button_list&&item.button_list.length}}">
+                    <view bindtap="onClickHeaderBtns" class="user-button {{innerItem.highlight==1?'user-button-highlight':''}}" data-code="{{innerItem.id}}" data-user="{{item}}" wx:for="{{item.button_list}}" wx:for-item="innerItem" wx:key="{{innerItem.id}}">
+                        <image class="user-button-icon" src="{{innerItem.icon_url}}" wx:if="{{innerItem.icon_url}}"></image>
+                        <view class="user-button-title">{{innerItem.name}}</view>
+                    </view>
+                </view>
+                <view class="user-status" wx:if="{{item.status}}">{{item.status}}</view>
+            </view>
+            <wm-toggle bind:closeupLogClickEvent="lxCloseupClick" bind:closeupLogViewEvent="lxCloseupView" bind:expandLogClickEvent="lxExpandClick" bind:expandLogViewEvent="lxExpandView" bind:scrollTopEvent="scrollTopCallback" bind:toggleImgEvent="imgClickCallback" closeUpAnim="Boolean(false)" index="{{index}}" list="{{item.foodlist}}" needToggle="{{!isUserToggle}}"></wm-toggle>
+            <view class="detail-item-footer">
+                <view class="item-footer-info" wx:if="{{item.box_price}}">
+                    <view>包装费</view>
+                    <view>¥{{item.box_price}}</view>
+                </view>
+                <view class="item-footer-info" wx:if="{{item.shipping_fee}}">
+                    <view>配送费</view>
+                    <view>¥{{item.shipping_fee}}</view>
+                </view>
+                <view class="item-footer-info" wx:if="{{item.discount_price}}">
+                    <view>优惠合计</view>
+                    <view class="important-price">-¥{{item.discount_price}}</view>
+                </view>
+                <view class="item-footer-info flex-end" wx:if="{{item.total_price}}">
+                    <view>小计</view>
+                    <view class="important-price weight pdl10">¥{{item.total_price}}</view>
+                </view>
+            </view>
+        </view>
+        <view bindtap="onTapToggle" class="show_more_food show_more_food_outer" wx:if="{{canToggle}}">
+            <text class="show_more_food_text">{{toggleWord}}</text>
+            <image class="show_more_food_img {{moreClass}}" src="/img/icons/select-arrow-up2.png"></image>
+        </view>
+    </block>
+    <wm-toggle bind:closeupLogClickEvent="lxCloseupClick" bind:closeupLogViewEvent="lxCloseupView" bind:expandLogClickEvent="lxExpandClick" bind:expandLogViewEvent="lxExpandView" bind:scrollTopEvent="scrollTopCallback" bind:toggleImgEvent="imgClickCallback" closeUpAnim="true" list="{{list}}" wx:else></wm-toggle>
+</view>

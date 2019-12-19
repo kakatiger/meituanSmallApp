@@ -1,0 +1,4 @@
+<template name="search-suggest-card">
+    <view bindtap="onClickHot" class="search-suggest-card {{item.label_type===12004?'search-suggest-card-hot':''}}" data-history="{{isHistory}}" data-item="{{item}}" wx:for="{{hotLabels}}" wx:key="{{item.label_name}} ">
+        <image class="icon-label-shop " src="/img/icons/shop.png" wx:if="{{item.label_type===12000||item.label_type===12003}}"></image> {{item.label_name}} </view>
+</template>

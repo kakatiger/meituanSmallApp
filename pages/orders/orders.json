@@ -1,0 +1,9 @@
+{
+    "navigationBarTitleText": "订单",
+    "enablePullDownRefresh": true,
+    "backgroundColor": "#f4f4f4",
+    "usingComponents": {
+        "wm-navigator": "../../npm/@wmfe/wxapp-component-navigator/src/components/index",
+        "mina-navigate": "../../components/mina-navigate/index"
+    }
+}

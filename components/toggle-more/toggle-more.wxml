@@ -1,0 +1,7 @@
+<view class="food-list">
+    <wm-spu bind:imgEvent="imgClickCallback" index="{{index}}" spu="{{item}}" wx:for="{{toggleList}}" wx:key="{{item.id + item.count}}"></wm-spu>
+    <view bindtap="onTapToggle" class="show_more_food" wx:if="{{canToggle}}">
+        <text class="show_more_food_text">{{toggleWord}}</text>
+        <image class="show_more_food_img {{moreFoodImgClass}}" src="/img/icons/select-arrow-up2.png"></image>
+    </view>
+</view>

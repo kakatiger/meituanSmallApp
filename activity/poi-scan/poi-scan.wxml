@@ -1,0 +1,73 @@
+<template name="poi-scan">
+    <view class="airdrop-coupon-mask" style="{{showCouponDialog?'':'display: none'}}">
+        <scroll-view scrollY class="couponLoading">
+            <view class="box-wrap">
+                <view class="test"></view>
+                <view class="coupon_bg"></view>
+                <image class="poiLogo" src="{{poiPic}}"></image>
+                <image class="wmLogo" src="../../img/icons/shoploading.png"></image>
+                <view class="couponLoading-wrap">
+                    <include src="../common/login.wxml"></include>
+                    <view class="load_status" wx:if="{{isshowLoading}}">
+                        <view class="load_circle"></view>
+                        <view class="load_text">正在领取红包</view>
+                    </view>
+                    <view class="loginBox result" wx:if="{{isShowCoupon}}">
+                        <view class="login-text" style="{{showIcon?'width: 400rpx':'width: 100%'}}">
+                            <icons class="success-icon" wx:if="{{showIcon}}"></icons>{{successTip}}</view>
+                        <view class="result-inner success normal-coupons " wx:for="{{commonCoupon}}">
+                            <view class="data-img" wx:if="{{item.logoUrl}}">
+                                <image src="{{item.logoUrl}}"></image>
+                            </view>
+                            <view class="fl couponname shenlue {{item.logoUrl?'':'no-ml'}}">
+                                <view class="result-title">{{item.couponDisplayName}}</view>
+                                <view class="clearfix result-sub-container">
+                                    <view class="result-sub-title">{{item.expiredDate}}</view>
+                                    <view class="poi_sign poi_share" wx:if="{{item.mutexType==2}}">同享券</view>
+                                    <view class="poi_sign poi_mutex" wx:if="{{item.mutexType==1}}">互斥券</view>
+                                </view>
+                            </view>
+                            <view class="number fr">
+                                <view>
+                                    <icons class="rmb">￥</icons>
+                                    <icons class="num">{{item.couponAmount>=10000?'999+':item.couponAmount}}</icons>
+                                </view>
+                                <view class="useLimit">{{item.amountLimit}}</view>
+                            </view>
+                        </view>
+                        <view class="login-tip coupon-tip">代金券/红包已放入账号 <span bindtap="toMe" class="see">查看></span>
+                        </view>
+                        <button bindtap="useCoupon" class="getCapture">立即使用</button>
+                        <button bindtap="shareToFriend" class="getCapture pullNew" openType="share">邀请好友来领券</button>
+                    </view>
+                    <view class="loginBox result" wx:if="{{isFail}}">
+                        <view id="rst-notopen">
+                            <view class="result-inner fail result-gray">
+                                <view class="err-msg err-short-msg">抢光了</view>
+                            </view>
+                        </view>
+                        <view class="login-tip coupon-tip">代金券/红包已放入账号 <span bindtap="toMe" class="see">查看></span>
+                        </view>
+                        <button bindtap="intoPoi" class="getCapture into-poi">进店逛逛</button>
+                    </view>
+                    <view class="rule" wx:if="{{isShowCoupon||isFail}}">
+                        <view class="sec-sub-title">活动规则</view>
+                        <view class="act-rules">
+                            <view class="rules-txt">1.优惠券/红包可在美团或美团外卖最新版客户端、微信小程序等渠道中使用；</view>
+                            <view class="rules-txt">2.优惠券/红包仅限在线支付订单使用；</view>
+                            <view class="rules-txt">3.红包必须在收餐人手机号、领取时输入的手机号和账号绑定的手机号需为同一手机号时才可使用；</view>
+                            <view class="rules-txt">4.互斥券不可与满减、折扣商品、第二份半价活动优惠同时享受；</view>
+                            <view class="rules-txt">5.新客首单红包不与其他优惠叠加使用；</view>
+                            <view class="rules-txt">6.如有其它疑问请咨询美团外卖客服。</view>
+                        </view>
+                    </view>
+                    <view class="no-auth" wx:if="{{isShowFail}}">
+                        <view class="fail-text">领取失败,请重新尝试</view>
+                        <view bindtap="reFresh" class="fail-btn">换个姿势,再试一次</view>
+                    </view>
+                </view>
+            </view>
+        </scroll-view>
+        <view bindtap="closeCoupon" class="close"></view>
+    </view>
+</template>

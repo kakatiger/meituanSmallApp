@@ -1,0 +1,4 @@
+<image class="waimai_logo" src="../img/icons/icon_waimai.png"></image>
+<view class="auth_title_1">美团外卖</view>
+<view class="auth_title_2">授权后才可以参加活动哦</view>
+<view bindtap="auth" class="auth_button">去授权</view>

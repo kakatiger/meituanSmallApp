@@ -1,0 +1,7 @@
+{
+    "navigationBarTitleText": "美团外卖",
+    "disableScroll": true,
+    "usingComponents": {
+        "wm-navigator": "../../npm/@wmfe/wxapp-component-navigator/src/components/index"
+    }
+}

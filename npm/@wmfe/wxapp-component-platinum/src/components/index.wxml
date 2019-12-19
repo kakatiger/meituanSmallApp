@@ -1,0 +1,67 @@
+<template name="product">
+    <view bindtap="gotoProAnchor" class="product" data-poiid="{{wm_poi_id}}" data-spuid="{{spu_id}}" data-url="{{click_url}}">
+        <view class="product-intro">
+            <image class="product-img" src="{{picture}}"></image>
+            <view class="product-img-mask"></view>
+            <view class="f-s-c product-name">
+                <view> {{name}} </view>
+            </view>
+        </view>
+        <view class="product-price">
+            <text class="now">
+                <text class="symbol">￥</text>{{util.getPriceStr(price)}}</text>
+            <text class="normal" wx:if="{{!!origin_price&&util.priceToNum(price)<util.priceToNum(origin_price)}}">￥{{util.getPriceStr(origin_price)}}</text>
+        </view>
+    </view>
+</template>
+<template name="couponReduce">
+    <view class="coupon coupon-item"> {{couponTitle}} </view>
+</template>
+<template name="coupon">
+    <view class="coupon-box coupon-item">
+        <image class="coupon-png" mode="aspectFill" src="./assets/left.png"></image>
+        <view class="coupon"> {{couponTitle}} </view>
+        <image class="coupon-png" mode="aspectFill" src="./assets/right.png"></image>
+    </view>
+</template>
+<view class="ad-platinum">
+    <midas-simple bindimpressionend="reportAdHolderMV" groupName="platinum">
+        <view class="ad-position-holder"></view>
+    </midas-simple>
+    <midas bindclickend="gotoShop" bindimpressionend="reportAdMV" callbackParams="{{adData.platinum_banner.banner_click_url}}" clickExtra="event_id=b_MdbaO" env="{{env!=='product'?'beta':'product'}}" extra="{{uuid?'wm_did='+uuid+'&':''}}wm_ctype=wxapp&lch={{lch}}" feedback="{{adData.platinum_banner.charge_info}}" impressionExtra="event_id=b_dmQmy" serverType="meituan_waimai" wx:if="{{adData}}">
+        <view class="platinum">
+            <view class="shadow">
+                <view class="shop-info">
+                    <image class="bg" mode="widthFix" src="{{adData.platinum_banner.banner_pic_url}}"></image>
+                    <image class="main-tag tag" src="./assets/tag.png"></image>
+                    <view class="mask"></view>
+                    <view class="f-c-c ad-tag tag">广告</view>
+                    <view class="info-box">
+                        <view class="info">
+                            <view class="logo">
+                                <image mode="aspectFill" src="{{adData.platinum_banner.poi_logo}}"></image>
+                            </view>
+                            <view class="main-info">
+                                <view class="shop-name">{{adData.platinum_banner.poi_name}}</view>
+                                <view class="coupon-list">
+                                    <block wx:for="{{adData.platinum_banner.promotion}}" wx:key="{{index}}">
+                                        <template is="coupon" data="{{couponTitle:item}}" wx:if="{{util.isCouponStr(item)}}"></template>
+                                        <template is="couponReduce" data="{{couponTitle:item}}" wx:elif="{{util.isManJianStr(item)}}"></template>
+                                    </block>
+                                </view>
+                            </view>
+                        </view>
+                        <view class="slogan"> {{adData.platinum_banner.main_slogan}} </view>
+                    </view>
+                </view>
+                <view class="productInfo">
+                    <block wx:for="{{3}}" wx:key="{{index}}">
+                        <template is="product" data="{{...adData.platinum_banner.products[index],wm_poi_id:adData.platinum_banner.wm_poi_id}}" wx:if="{{adData.platinum_banner.products.length>index}}"></template>
+                        <view class="product" wx:else></view>
+                    </block>
+                </view>
+            </view>
+        </view>
+    </midas>
+</view>
+<wxs module="util" src="util/util.wxs" />

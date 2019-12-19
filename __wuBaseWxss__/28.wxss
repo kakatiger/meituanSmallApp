@@ -1,0 +1,17 @@
+.page-container {
+    font-size: 28rpx;
+}
+
+.coupon {
+    margin: 22rpx 30rpx;
+}
+
+.coupon-jump-icon {
+    width: 10rpx;
+    height: 18rpx;
+    margin-left: 15rpx;
+}
+
+.coupon-arraw {
+    margin-left: 10rpx;
+}

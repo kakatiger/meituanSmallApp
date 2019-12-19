@@ -1,0 +1,115 @@
+.poi-modal {
+    display: flex;
+    margin-top: 20rpx;
+    position: relative;
+}
+
+.poi-food-img {
+    width: 168rpx;
+    height: 168rpx;
+    margin-right: 19rpx;
+    position: relative;
+}
+
+.food-name {
+    font-family: PingFangSC-Regular;
+    color: #333333;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.poi-food-name {
+    font-size: 24rpx;
+    width: 170rpx;
+}
+
+.poi-food-discount-price {
+    font-family: PingFang-SC-Regular;
+    font-size: 32rpx;
+    color: #FB4E44;
+    line-height: 44rpx;
+}
+
+.poi-food-normal-price {
+    font-family: PingFang-SC-Regular;
+    font-size: 22rpx;
+    color: #A9A9A9;
+    letter-spacing: 0.31rpx;
+    line-height: 27rpx;
+    text-decoration: line-through;
+    margin-left: 6rpx;
+}
+
+.poi-name-highlight {
+    color: #FFB000;
+}
+
+.product-food-name {
+    font-size: 28rpx;
+    width: 363rpx;
+}
+
+.product-food-recommend-info {
+    font-family: PingFang-SC-Light;
+    font-size: 22rpx;
+    color: #666666;
+    letter-spacing: 0.31rpx;
+    line-height: 27rpx;
+    position: relative;
+}
+
+.slot {
+    padding-left: 20rpx;
+}
+
+.slot::before {
+    content: '';
+    position: absolute;
+    width: 1px;
+    height: 12px;
+    background-color: #E4E4E4;
+    transform: scale(0.5,0.5);
+    margin-left: -10rpx;
+}
+
+.product-food-flex {
+    height: 168rpx;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.product-food-more {
+    font-family: PingFang-SC-Regular;
+    font-size: 24rpx;
+    color: #666666;
+    line-height: 32rpx;
+    display: flex;
+    padding-top: 10rpx;
+}
+
+.product-food-more-icon {
+    margin: 14.5rpx 10.5rpx;
+}
+
+.recommend-icon {
+    height: 30rpx;
+    font-family: PingFangSC-Regular;
+    font-size: 22rpx;
+    color: #FFD161;
+    background-color: #333;
+    text-align: center;
+    padding: 0rpx 10rpx;
+    position: absolute;
+    left: 0;
+    bottom: 10rpx;
+}
+
+.add-recommend-icon-poi {
+    bottom: 18rpx;
+}
+
+.add-positon {
+    position: relative;
+}

@@ -1,0 +1,133 @@
+.header {
+    color: #fff;
+    width: 750rpx;
+    height: 190rpx;
+    background-color: #333333;
+    bottom: 0rpx;
+}
+
+.upper {
+    display: flex;
+    justify-content: space-between;
+    padding: 30rpx;
+}
+
+.ping-text {
+    font-family: PingFangSC-Medium;
+    font-size: 50rpx;
+    color: #FFFFFF;
+    line-height: 50rpx;
+}
+
+.ping-button {
+    display: flex;
+}
+
+.button-cancel {
+    position: relative;
+    width: 120rpx;
+    height: 50rpx;
+    border-radius: 0rpx;
+    font-family: PingFangSC-Regular;
+    font-size: 24rpx;
+    color: #999999;
+    text-align: center;
+    background-color: #333333;
+    padding: 8rpx 10rpx 8rpx 10rpx;
+    line-height: 33rpx;
+}
+
+.button-cancel:after {
+    content: ' ';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200%;
+    height: 200%;
+    border: 1px solid #999999;
+    border-radius: 8rpx;
+    transform-origin: 0 0;
+    transform: scale(0.5);
+}
+
+.button-invite {
+    width: 120rpx;
+    height: 50rpx;
+    border-radius: 0rpx;
+    font-family: PingFangSC-Regular;
+    font-size: 24rpx;
+    color: #FFFFFF;
+    text-align: center;
+    background-color: #333333;
+    margin-left: 10rpx;
+    padding: 8rpx 10rpx 8rpx 10rpx;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.button-invite:after {
+    content: ' ';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200%;
+    height: 200%;
+    border: 1px solid #FFFFFF;
+    border-radius: 8rpx;
+    transform-origin: 0 0;
+    transform: scale(0.5);
+}
+
+.under-wait {
+    display: flex;
+    margin-left: 30rpx;
+}
+
+.under-text {
+    font-family: PingFangSC-Regular;
+    font-size: 28rpx;
+    color: #CCCCCC;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-left: 20rpx;
+    padding-top: 6rpx;
+}
+
+.circle {
+    display: flex;
+    position: relative;
+}
+
+.headshot {
+    display: inline-block;
+    width: 50rpx;
+    height: 50rpx;
+    border-radius: 50rpx;
+    position: absolute;
+}
+
+.dot {
+    width: 6rpx;
+    height: 6rpx;
+    border-radius: 50%;
+    background-color: #FFFFFF;
+    opacity: 0.5;
+    margin-left: 6rpx;
+    margin-top: 20rpx;
+}
+
+.dot-white {
+    opacity: 1;
+}
+
+.image1 {
+    width: 30rpx;
+    height: 30rpx;
+    margin-top: 6rpx;
+}
+
+.mask-toast {
+    position: relative;
+}

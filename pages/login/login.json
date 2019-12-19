@@ -1,0 +1,7 @@
+{
+    "navigationBarTitleText": "微信授权登录",
+    "disableScroll": true,
+    "usingComponents": {
+        "open-setting": "../../components/open-setting/index"
+    }
+}

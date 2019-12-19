@@ -1,0 +1,41 @@
+.pindan-progress {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: calc(100vw - 40rpx);
+    margin-top: 30rpx;
+}
+
+.pindan-progress-iconline {
+    width: 511rpx;
+    display: flex;
+    align-items: center;
+}
+
+.pindan-progress-dvd {
+    margin: 0 13rpx;
+    width: 176rpx;
+    height: 6rpx;
+}
+
+.pindan-progress-img {
+    height: 40rpx;
+    width: 40rpx;
+}
+
+.pindan-progress-stateline {
+    width: 559rpx;
+    margin-top: 10rpx;
+    justify-content: space-between;
+    display: flex;
+}
+
+.pindan-progress-word {
+    font-size: 22rpx;
+    color: #ccc;
+}
+
+.import-word {
+    color: #333;
+}

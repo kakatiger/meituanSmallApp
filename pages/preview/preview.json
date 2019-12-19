@@ -1,0 +1,9 @@
+{
+    "navigationBarBackgroundColor": "#F4F4F4",
+    "navigationBarTitleText": "提交订单",
+    "disableScroll": true,
+    "usingComponents": {
+        "wm-navigator": "../../npm/@wmfe/wxapp-component-navigator/src/components/index",
+        "wm-detail-list": "/components/order-detail-list/order-detail-list"
+    }
+}

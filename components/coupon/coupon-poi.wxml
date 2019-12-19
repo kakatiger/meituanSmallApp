@@ -1,0 +1,39 @@
+<template name="coupon-poi">
+    <view bindtap="{{selected||disabled?'':'onSelectPoiCoupon'}}" class="coupon coupon-poi {{disabled?'coupon-disabled':''}}" data-couponid="{{coupon.poicoupon_view_id}}" data-poiid="{{coupon.poi_id}}">
+        <image class="coupon-selected" src="/img/coupon/icon-selected.png" wx:if="{{selected}}"></image>
+        <view class="coupon-top">
+            <view class="coupon-left">
+                <view class="coupon-poi-img-box">
+                    <image class="coupon-poi-img" src="{{coupon.poi_url}}"></image>
+                </view>
+                <view class="coupon-name coupon-poi-name ellipsis">{{coupon.title}}</view>
+                <view class="coupon-mutex flex-center {{disabled?'coupon-disabled':''}} {{coupon.mutex_type!==mutexType.MUTEX_TYPE.SHARE?'coupon-share':''}}" wx:if="{{coupon.mutex_type!==mutexType.MUTEX_TYPE.NOT_TAG}}"> {{mutexType.getMutexType(coupon.mutex_type)}} </view>
+                <view class="coupon-deadline coupon-poi-deadline ellipsis">有效期至{{coupon.deadline}}</view>
+            </view>
+            <view class="coupon-right flex-center">
+                <view class="coupon-money ellipsis">
+                    <view class="ui-inline-block coupon-money-small">¥</view>
+                    <view class="ui-inline coupon-money-text">{{coupon.money}}</view>
+                </view>
+                <view class="coupon-price-limit ellipsis">{{coupon.price_limit}}</view>
+            </view>
+        </view>
+        <view class="coupon-bottom">
+            <view class="coupon-poi-rule">
+                <view class="coupon-poi-rule-left {{disabled?'coupon-disabled':''}}">{{coupon.use_rule}}</view>
+                <view class="coupon-poi-rule-use" wx:if="{{!disabled&&!hideUseLink}}">
+                    <view class="flex-center"> 去使用 <view class="right-arrow"></view>
+                    </view>
+                </view>
+            </view>
+            <view bindtap="onClickTogglePoiReason" class="coupon-invalid-reason" data-togglekey="{{coupon.poicoupon_view_id}}" wx:if="{{showReason&&coupon.disable_descriptions&&coupon.disable_descriptions.length>0}}">
+                <view class="coupon-bottom-toggle"> 不可用原因 <view class="coupont-bottom-arrow ui-inline-block ui-arrow {{togglePoiReason[coupon.poicoupon_view_id]?'ui-arrow-up':'ui-arrow-down'}}"></view>
+                </view>
+                <view class="coupon-bottom-item ellipsis" wx:if="{{togglePoiReason[coupon.poicoupon_view_id]}}" wx:for="{{coupon.disable_descriptions}}" wx:for-item="reason" wx:key="{{index}}"> ·{{reason}} </view>
+            </view>
+        </view>
+        <image class="coupon-status-img" src="/img/coupon/poi-coupon-expired.png" wx:if="{{coupon.status===3}}"></image>
+        <image class="coupon-status-img" src="/img/coupon/poi-coupon-freezed.png" wx:elif="{{coupon.status===4}}"></image>
+    </view>
+</template>
+<wxs module="mutexType" src="coupon-enum.wxs" />

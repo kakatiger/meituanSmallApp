@@ -1,0 +1,11 @@
+<template name="poi-list">
+    <import src="poi-item.wxml"></import>
+    <wm-navigator bind:navtap="onClickPoilistItem" class="poi-nav" data-id="{{item.id}}" data-index="{{index}}" data-poi="{{item}}" url="../restaurant/restaurant?poi_id={{item.id}}&cat_id={{cat_id||0}}" wx:for="{{poilist}}" wx:key="{{item.id}}">
+        <midas adidx="{{index+1}}" env="{{env==='qa'?'beta':'product'}}" extra="{{uuid?'wm_did='+uuid+'&':''}}wm_ctype=wxapp&lch={{lch||'wx'}}" feedback="{{item.charge_info}}" serverType="meituan_waimai" wx:if="{{item.ad_type&&item.ad_type!=0}}">
+            <template is="poi-item" data="{{item:item,index:index,cartKeys:cartKeys}}"></template>
+        </midas>
+        <view wx:else>
+            <template is="poi-item" data="{{item:item,index:index,cartKeys:cartKeys}}"></template>
+        </view>
+    </wm-navigator>
+</template>

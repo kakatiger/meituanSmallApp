@@ -1,0 +1,41 @@
+<block wx:if="{{foodItem==='spu'&&foodStatus===0&&poiStatus===1}}">
+    <view class="panel-right flex-center position-relative" wx:if="{{item.skus.length===1&&item.attrs.length===0}}">
+        <image class="remove-food-icon" hidden="{{(cartCountMap[item.id]||0)===0}}" src="/img/icons/remove.png"></image>
+        <view bindtap="onClickDelFood" class="remove-food-box-click" data-action="modifyFood" data-foodid="{{item.id}}" data-id="{{item.skus[0].id}}" hidden="{{(cartCountMap[item.id]||0)===0}}"></view>
+        <view class="food-num color-black" hidden="{{(cartCountMap[item.id]||0)===0}}"> {{cartCountMap[item.id]||0}} </view>
+        <image class="add-food-icon" src="/img/icons/add.png"></image>
+        <view bindtap="onClickAddFood" class="add-food-box-click" data-action="modifyFood" data-foodid="{{item.id}}" data-id="{{item.skus[0].id}}" data-item="{{item}}"></view>
+    </view>
+    <view bindtap="onClickChooseFood" class="add-food-choose position-relative" data-action="modifyFood" data-id="{{item.id}}" data-item="{{item}}" wx:else>
+        <view class="add-food-choose-num" wx:if="{{(cartCountMap[item.id]||0)!==0}}"> {{cartCountMap[item.id]||0}} </view> 选规格 </view>
+</block>
+<view class="cart-choose-num" wx:elif="{{foodItem==='getMore'}}">
+    <image class="cart-remove-food" hidden="{{item.count===0}}" src="/img/icons/remove.png"></image>
+    <view bindtap="onClickDelFood" class="remove-food-box-click" data-attrs="{{item.attrs||[]}}" data-foodid="{{item.spuid}}" data-id="{{item.skuid}}" data-item="{{item}}" hidden="{{item.count===0}}"></view>
+    <text class="food-num" hidden="{{item.count===0}}">{{item.count}}</text>
+    <image class="cart-add-food" src="/img/icons/add.png"></image>
+    <view bindtap="onClickAddFood" class="add-food-box-click" data-attrs="{{item.attrs||[]}}" data-foodid="{{item.spuid}}" data-id="{{item.skuid}}" data-item="{{item}}"></view>
+</view>
+<view class="cart-choose-num" wx:elif="{{foodItem==='sku'}}">
+    <image class="cart-remove-food" src="/img/icons/remove.png"></image>
+    <view bindtap="onClickDelFood" class="remove-food-box-click" data-attrs="{{item.attrs}}" data-foodid="{{item.foodid}}" data-id="{{item.id}}" data-item="{{item}}"></view>
+    <text class="food-num">{{item.count}}</text>
+    <image class="cart-add-food" src="/img/icons/add.png"></image>
+    <view bindtap="onClickAddFood" class="add-food-box-click" data-attrs="{{item.attrs}}" data-foodid="{{item.foodid}}" data-id="{{item.id}}" data-item="{{item}}"></view>
+</view>
+<block wx:elif="{{foodItem==='multiSpu'}}">
+    <block wx:if="{{item.activeCount===0}}">
+        <view class="modal-food-cart">
+            <view class="cart-img cart-img-normal-active ui-inline-block"></view> 加入购物车 </view>
+        <view bindtap="onClickModalFoodAdd" class="modal-food-cart-click" data-attrs="{{item.activeAttrs}}" data-foodid="{{item.id}}" data-id="{{item.activeSku}}" data-item="{{item}}"></view>
+    </block>
+    <view class="panel-right flex-center position-relative" wx:else>
+        <image class="remove-food-icon" src="/img/icons/remove.png"></image>
+        <view class="food-num"> {{item.activeCount}} </view>
+        <image class="add-food-icon" src="/img/icons/add.png"></image>
+        <view bindtap="onClickModalFoodDel" class="remove-food-box-click" data-attrs="{{item.activeAttrs}}" data-foodid="{{item.id}}" data-id="{{item.activeSku}}"></view>
+        <view bindtap="onClickModalFoodAdd" class="add-food-box-click" data-attrs="{{item.activeAttrs}}" data-foodid="{{item.id}}" data-id="{{item.activeSku}}" data-item="{{item}}"></view>
+    </view>
+</block>
+<view class="position-relative cannot-buy-now choose-num panel-right flex-center" wx:elif="{{foodStatus===3&&poiStatus===1}}">
+    <image class="cannot-buy-now-image" src="/img/icons/rule-icon.png"></image> 非可售时间 </view>

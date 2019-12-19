@@ -1,0 +1,11 @@
+<template name="search-poi-list">
+    <wm-navigator bindnavtap="onClickPoilistItem" class="poi-nav {{index===poilist.length-1?'poi-nav-last':''}}" data-id="{{item.id}}" data-index="{{index}}" data-logid="{{item.search_log_Id}}" data-poi="{{item}}" data-stid="{{item.tgt_stids}}" url="../restaurant/restaurant?poi_id={{item.id}}" wx:for="{{poilist}}" wx:key="{{item.id}}">
+        <midas adidx="{{index+1}}" clickExtra="event_id={{item.search_result_type===0?'b_KOXis':item.search_result_type===1?'b_U41Mv':item.search_result_type===2?'b_DpKEu':''}}" env="{{env==='qa'?'beta':'product'}}" extra="wm_did={{uuid}}&wm_ctype=wxapp&lch={{lch||'wx'}}" feedback="{{item.charge_info}}" impressionExtra="event_id={{item.search_result_type===0?'b_IPU0P':item.search_result_type===1?'b_ddZz3':item.search_result_type===2?'b_bzIsD':''}}" serverType="meituan_waimai" wx:if="{{item.ad_type&&item.ad_type!=0}}">
+            <template is="search-poi-item" data="{{item:item,index:index,productShown:productShown,poilistActvsShown:poilistActvsShown,env:env,uuid:uuid,lch:lch,isShopTemplate:isShopTemplate,isDishTemplate:isDishTemplate}}"></template>
+        </midas>
+        <view wx:else>
+            <template is="search-poi-item" data="{{item:item,index:index,productShown:productShown,poilistActvsShown:poilistActvsShown,env:env,uuid:uuid,lch:lch,isShopTemplate:isShopTemplate,isDishTemplate:isDishTemplate}}"></template>
+        </view>
+    </wm-navigator>
+</template>
+<import src="./search-poi-item.wxml"></import>

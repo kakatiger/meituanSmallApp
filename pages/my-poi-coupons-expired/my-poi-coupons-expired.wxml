@@ -1,0 +1,10 @@
+<import src="../../components/coupon/coupon-poi.wxml"></import>
+<view class="page-container page-container-abs">
+    <include src="../base.wxml"></include>
+    <scroll-view bindscrolltolower="onScrollBottom" class="page-scroll" scrollY="true">
+        <block wx:if="{{coupons.length>0}}">
+            <template is="coupon-poi" data="{{coupon:item,disabled:true}}" wx:for="{{coupons}}" wx:key="{{item.poicoupon_view_id}}"></template>
+            <view class="coupon-list-end" hidden="{{more}}">没有更多过期商家代金券了</view>
+        </block>
+    </scroll-view>
+</view>

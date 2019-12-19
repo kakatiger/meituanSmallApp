@@ -1,0 +1,16 @@
+{
+    "navigationBarTitleText": "美团外卖",
+    "enablePullDownRefresh": true,
+    "backgroundColor": "#fff",
+    "backgroundTextStyle": "dark",
+    "usingComponents": {
+        "mina-navigate": "../../components/mina-navigate/index",
+        "open-setting": "../../components/open-setting/index",
+        "midas": "../../components/midas/index",
+        "airdrop-coupon": "../../components/airdrop-coupon/airdrop-coupon",
+        "airdrop-layer": "../../components/airdrop-layer/airdrop-layer",
+        "wm-navigator": "../../npm/@wmfe/wxapp-component-navigator/src/components/index",
+        "wm-image": "../../components/wm-image/index",
+        "wm-platinum": "../../npm/@wmfe/wxapp-component-platinum/src/components/index"
+    }
+}

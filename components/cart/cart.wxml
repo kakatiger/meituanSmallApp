@@ -1,0 +1,144 @@
+<view class="cart-view">
+    <view bindtap="onClickCartFooter" class="modal-backdrop footer-backdrop {{isIpx?'cart-backdropOnIphoneX':'cart-backdrop'}}" hidden="{{isHiddenCart}}"></view>
+    <view bindtap="closeAddMore" class="modal-backdrop footer-backdrop {{isIpx?'cart-backdropOnIphoneX':'cart-backdrop'}}" hidden="{{isHiddenGetMore}}"></view>
+    <view class="cart {{cartAnimation}} {{isIpx?'cart-iphoneX':''}}" hidden="{{isHiddenCart}}">
+        <view class="cart-tip-container tipInAnimation {{isIpx?'cart-tip-container-iphoneX':''}}">
+            <view class="cart-tip" hidden="{{activePanel||cartTip.length===0||isNewProducts}}"> {{cartTip[0]&&cartTip[0]}} <text class="cart-highlight">{{cartTip[1]&&cartTip[1]}}</text> {{cartTip[2]&&cartTip[2]}} <text class="cart-highlight">{{cartTip[3]&&cartTip[3]}}</text> {{cartTip[4]&&cartTip[4]}} <text bindtap="onAddMoreClick" class="get-more-btn" wx:if="{{addMoreShow}}">[去凑单]</text>
+            </view>
+        </view>
+        <view class="cart-item-list" wx:if="{{!isInSharing}}">
+            <view class="cart-head">
+                <view class="box-fee" hidden="{{cartBoxPrice==0}}">包装费{{cartBoxPrice}}元</view>
+                <view bindtap="onClickClearCart" class="cart-bin">
+                    <image class="bin-icon" src="/img/icons/bin.png"></image>
+                    <text class="clear-cart">清空购物车</text>
+                </view>
+            </view>
+            <scroll-view class="cart-list" scrollY="true" style="height:{{cart[0].cart.length>4?'488rpx':''}}">
+                <view class="cart-food-item" wx:for="{{cart[0].cart}}" wx:key="{{item.id}}">
+                    <view class="cart-food-item-left">
+                        <view class="cart-food-name"> {{item.name}} </view>
+                        <view class="cart-food-subdtl" wx:if="{{(item.activity_type===1||item.activity_type===5)&&item.count>item.actvCount}}"> 含{{item.count-item.actvCount}}份原价商品 </view>
+                        <view class="cart-food-subdtl" wx:if="{{item.activity_type===2&&item.actvCount>0}}"> 含{{item.actvCount}}份半价商品 </view>
+                        <view class="cart-food-subdtl" wx:if="{{(item.activity_type==0||item.activity_type==3)&&item.attrName}}"> {{item.attrName}} </view>
+                    </view>
+                    <view class="cart-food-price"> ¥{{item.priceTotal}} </view>
+                    <food-count-unit bind:onClickAddFood="onClickAddFood" bind:onClickDelFood="onClickDelFood" foodItem="sku" item="{{item}}"></food-count-unit>
+                </view>
+            </scroll-view>
+        </view>
+        <scroll-view class="cart-item-list cart-item-list-in-sharing" scrollY="true" style="max-height:800rpx" wx:if="{{isInSharing}}">
+            <block wx:for="{{cart}}" wx:for-item="someone" wx:key="someone.openID">
+                <view class="cart-head cart-head-share {{index!==0?'mg-top-20':''}}">
+                    <view class="sharing-person">
+                        <image class="sharing-person-img" src="{{someone.user_info.avatar||'/img/icons/mine-image-new.png'}}"></image>
+                        <view class="sharing-person-name">{{someone.user_info.nickname||'一位拼友'}}</view>
+                        <view class="sharing-person-status" wx:if="{{index===0}}">（我）</view>
+                        <block wx:elif="{{someone.user_info.user_status===2}}">
+                            <image class="status-img status-img-done" src="/img/icons/status-done.png"></image>
+                            <view class="sharing-person-status status-done">已点完</view>
+                        </block>
+                        <block wx:else>
+                            <image class="status-img status-img-doing" src="/img/icons/status-doing.png"></image>
+                            <view class="sharing-person-status status-doing">修改中</view>
+                        </block>
+                    </view>
+                </view>
+                <view class="cart-list" wx:if="{{someone.cart.length!==0}}">
+                    <view class="cart-food-item no-border-bottom" wx:for="{{someone.cart}}" wx:for-index="idx" wx:key="{{someone.id}}">
+                        <view class="cart-food-item-left">
+                            <view class="cart-food-name"> {{item.name}} </view>
+                            <view class="cart-food-subdtl" wx:if="{{(item.activity_type===1||item.activity_type===5)&&item.count>item.actvCount}}"> 含{{item.count-item.actvCount}}份原价商品 </view>
+                            <view class="cart-food-subdtl" wx:if="{{item.activity_type===2&&item.actvCount>0}}"> 含{{item.actvCount}}份半价商品 </view>
+                            <view class="cart-food-subdtl" wx:if="{{(item.activity_type==0||item.activity_type==3)&&item.attrName}}"> {{item.attrName}} </view>
+                        </view>
+                        <view class="cart-food-price"> ¥{{item.priceTotal}} </view>
+                        <food-count-unit bind:onClickAddFood="onClickAddFood" bind:onClickDelFood="onClickDelFood" foodItem="sku" item="{{item}}" wx:if="{{index===0}}"></food-count-unit>
+                        <block wx:else>
+                            <view class="share-cart-count-x">x</view>
+                            <view class="share-cart-count-count">{{item.count}}</view>
+                        </block>
+                        <view class="food-dis" wx:if="{{idx!==0}}"></view>
+                    </view>
+                    <view class="cart-food-item no-border-bottom" hidden="{{someone.cart.length===0||someone.box_price==0}}">
+                        <view class="cart-food-item-left">
+                            <view class="cart-food-name"> 包装费 </view>
+                        </view>
+                        <view class="cart-food-price"> ¥{{someone.box_price||0}} </view>
+                        <view class="food-dis"></view>
+                    </view>
+                </view>
+                <view class="have-not-choose" wx:else> 你还没有选购商品哦～ </view>
+            </block>
+        </scroll-view>
+    </view>
+    <view class="cart-tip-container {{isIpx?'cart-tip-container-iphoneX':''}}" wx:if="{{activePanel===0&&isHiddenCart&&cartTipShow}}">
+        <view class="cart-tip" hidden="{{activePanel||cartTip.length===0}}"> {{cartTip[0]&&cartTip[0]}} <text class="cart-highlight">{{cartTip[1]&&cartTip[1]}}</text> {{cartTip[2]&&cartTip[2]}} <text class="cart-highlight">{{cartTip[3]&&cartTip[3]}}</text> {{cartTip[4]&&cartTip[4]}} <text bindtap="onAddMoreClick" class="get-more-btn" wx:if="{{addMoreShow&&!addMoreScrollShow}}">[去凑单]</text>
+        </view>
+        <scroll-view class="add-more-list" scrollY="true" wx:if="{{addMoreScrollShow}}">
+            <view class="cart-food-item" wx:for="{{addMoreSpuList}}" wx:key="{{item.skuid}}">
+                <view class="cart-food-item-left">
+                    <view class="cart-food-name"> {{item.name}} </view>
+                </view>
+                <view class="cart-food-price"> ¥{{item.totalPrice=='0'?item.price:item.totalPrice}} </view>
+                <view class="cart-choose-num flex-center">
+                    <food-count-unit bind:onClickAddFood="onClickAddFood" bind:onClickDelFood="onClickDelFood" foodItem="getMore" item="{{item}}"></food-count-unit>
+                </view>
+            </view>
+        </scroll-view>
+    </view>
+    <view class="footer {{isIpx?'footer-ipx':''}}" fixed="{{true}}" hidden="{{activePanel}}" wx:if="{{poiData.poi_info.status===1}}">
+        <view bindtap="onClickCartFooter" class="cart-icon">
+            <view class="cart-img cart-img-{{poiData.poi_info.delivery_type===1?'special':'normal'}}-{{cartFoodCount?'active':'empty'}}"></view>
+            <view class="cart-num flex-center" wx:if="{{cartFoodCount>0}}">{{cartFoodCount>99?'99+':cartFoodCount}}</view>
+        </view>
+        <block wx:if="{{isInSharing&&!isCreator}}">
+            <view bindtap="onClickCartFooter" class="bill-btn flex-center unavail-btn" data-action="notsubmit" hidden="{{cart.length!==0&&cart[0].cart.length!==0}}">选好了 </view>
+            <button bindtap="onClickCartFooter" class="bill-btn flex-center" data-action="submit" hidden="{{cart.length===0||cart[0].cart.length===0}}" wx:if="{{!hasUserInfo}}">选好了</button>
+            <button bindgetuserinfo="getUserInfo" class="bill-btn flex-center" hidden="{{cart.length===0||cart[0].cart.length===0}}" openType="getUserInfo" wx:else>选好了</button>
+        </block>
+        <block wx:elif="{{isInSharing&&isCreator}}">
+            <button bindgetuserinfo="onClickCartFooter" class="bill-btn flex-center" data-action="{{priceToGo||cartFoodCount===0?'notsubmit':'submit'}}" openType="getUserInfo" wx:if="{{hasUserInfo&&!priceToGo&&cartFoodCount!==0&&isOtherReady}}">去结算 </button>
+            <button bindgetuserinfo="onClickCartFooter" class="bill-btn flex-center" data-action="{{priceToGo||cartFoodCount===0?'notsubmit':'submit'}}" openType="getUserInfo" wx:elif="{{hasUserInfo&&!priceToGo&&cartFoodCount!==0&&!isOtherReady}}">
+                <view class="lh-48">去结算</view>
+                <view class="in-sharing-not-ready lh-22">有好友正在选购</view>
+            </button>
+            <view bindtap="onClickCartFooter" class="bill-btn flex-center {{priceToGo||cartFoodCount===0?'unavail-btn':''}}" data-action="{{priceToGo||cartFoodCount===0?'notsubmit':'submit'}}" wx:else>
+                <view> {{priceToGo||cartFoodCount===0?cartFoodCount?'还差'+priceToGo+'元':poiData.poi_info.min_price+'元起送':'去结算'}} </view>
+                <view class="in-sharing-not-ready" wx:if="{{isInSharing&&isCreator&&!isOtherReady}}">有好友正在选购</view>
+            </view>
+        </block>
+        <block wx:else>
+            <button bindgetuserinfo="onClickCartFooter" class="bill-btn flex-center" data-action="{{priceToGo||cartFoodCount===0?'notsubmit':'submit'}}" openType="getUserInfo" wx:if="{{hasUserInfo&&!priceToGo&&cartFoodCount!==0}}">去结算</button>
+            <view bindtap="onClickCartFooter" class="bill-btn flex-center {{priceToGo||cartFoodCount===0?'unavail-btn':''}}" data-action="{{priceToGo||cartFoodCount===0?'notsubmit':'submit'}}" wx:else>
+                <view> {{priceToGo||cartFoodCount===0?cartFoodCount?'还差'+priceToGo+'元':poiData.poi_info.min_price+'元起送':'去结算'}} </view>
+            </view>
+        </block>
+        <view bindtap="onClickCartFooter" class="spend" wx:if="{{cartFoodCount}}">
+            <view wx:if="{{!poiData.shopping_cart.self_delivery_tip}}">
+                <view class="food-count">
+                    <view>¥{{cartFoodPrice}}</view>
+                    <view class="my-own-cart-fee" wx:if="{{isInSharing}}">（我已点¥{{myOwnCartCount}}）</view>
+                </view>
+                <view class="fee-count"> {{poiData.shopping_cart.shipping_fee_cart_tip}} </view>
+            </view>
+            <view wx:if="{{poiData.shopping_cart.self_delivery_tip}}">
+                <view class="food-count-take-self">
+                    <text class="symbol">￥</text>{{cartFoodPrice}}<view class="my-own-cart-fee sharing-self-pick" wx:if="{{isInSharing}}">（我已点￥{{myOwnCartCount}}）</view>
+                </view>
+                <view class="take-self-cart-empty">
+                    <view class="food-count-text">{{poiData.shopping_cart.shipping_fee_cart_tip}}</view>
+                    <view class="take-self-empty">{{poiData.shopping_cart.self_delivery_tip}}</view>
+                </view>
+            </view>
+        </view>
+        <view class="cart-empty" wx:else>
+            <view class="cart-empty-txt" wx:if="{{!poiData.shopping_cart.self_delivery_tip}}">{{poiData.shopping_cart.shipping_fee_cart_tip}}</view>
+            <view class="take-self-cart-empty" wx:if="{{poiData.shopping_cart.self_delivery_tip}}">
+                <view class="empty-text">{{poiData.shopping_cart.shipping_fee_cart_tip}}</view>
+                <view class="take-self-empty">{{poiData.shopping_cart.self_delivery_tip}}</view>
+            </view>
+        </view>
+    </view>
+    <view class="footer flexCenter colorWhite" wx:if="{{poiData.poi_info.status===3}}">本店打烊了</view>
+</view>

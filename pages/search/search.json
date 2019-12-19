@@ -1,0 +1,10 @@
+{
+    "navigationBarTitleText": "搜索",
+    "disableScroll": true,
+    "usingComponents": {
+        "open-setting": "../../components/open-setting/index",
+        "wm-navigator": "../../npm/@wmfe/wxapp-component-navigator/src/components/index",
+        "wm-image": "../../components/wm-image/index",
+        "midas": "../../components/midas/index"
+    }
+}

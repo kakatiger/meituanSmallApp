@@ -1,0 +1,1 @@
+<image binderror="onImgLoadError" class="{{imgClass}} wm-image" src="{{!loadFail?src:defaultImgSrc}}"></image>

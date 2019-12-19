@@ -1,0 +1,7 @@
+{
+    "navigationBarTextStyle": "white",
+    "navigationBarBackgroundColor": "#333333",
+    "usingComponents": {
+        "login": "../../../../../components/login/login"
+    }
+}

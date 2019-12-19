@@ -1,0 +1,11 @@
+<template name="search-suggest-poi-status">
+    <view class="search-poi-status-content" wx:if="{{status}}">
+        <view class="search-poi-status {{status}}">
+            <block wx:if="{{status=='deliverying'}}"> {{min_price_tip}} <text class="deliverying-sep-line">|</text> {{shipping_fee_tip}} <text class="deliverying-sep-line">|</text> {{distance}} </block>
+            <block wx:else>
+                <text class="search-poi-status-title">{{status_content}}</text>
+                <text class="search-poi-status-description">{{desc_content}}</text>
+            </block>
+        </view>
+    </view>
+</template>

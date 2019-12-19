@@ -1,0 +1,30 @@
+<view class="header">
+    <view class="upper">
+        <view class="ping-text">拼单进行中</view>
+        <view class="ping-button">
+            <button bindtap="cancel" class="button-invite" wx:if="{{creator}}">取消拼单</button>
+            <button bindtap="invite" class="button-invite" id="buytogether" openType="share" wx:if="{{creator}}">邀请好友</button>
+            <button bindtap="cancel" class="button-invite" wx:if="{{!creator}}">退出拼单</button>
+        </view>
+    </view>
+    <view class="under-wait" style="right:446rpx" wx:if="{{collected===0&&collecting===0}}">
+        <view class="circle">
+            <view class="dot"></view>
+            <view class="dot dot-white"></view>
+            <view class="dot"></view>
+        </view>
+        <view class="under-text">等待好友加入拼单</view>
+    </view>
+    <view class="under-wait" wx:if="{{collected>0||collecting>0}}">
+        <view bindtap="showCart" class="circle" style="width:{{headshot.length*40+10}}rpx">
+            <slot></slot>
+        </view>
+        <view bindtap="showCart" class="under-text">
+            <view wx:if="{{collected>0}}">{{collected}}人已点完</view>
+            <view wx:if="{{collected>0&&collecting>0}}">,	</view>
+            <view wx:if="{{collecting>0}}">{{collecting}}人正在修改</view>
+            <image class="image1" src="/img/icons/ArrowRight.png"></image>
+        </view>
+    </view>
+    <slot></slot>
+</view>

@@ -1,0 +1,7 @@
+{
+    "navigationBarTitleText": "超出配送范围商家",
+    "disableScroll": true,
+    "usingComponents": {
+        "wm-image": "../../components/wm-image/index"
+    }
+}

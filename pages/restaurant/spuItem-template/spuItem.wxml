@@ -1,0 +1,31 @@
+<template name="spuItem">
+    <view class="food-item">
+        <view bindtap="showProductInfo" class="food-item-image" data-item="{{item}}" id="spu-{{tag}}-{{item.id}}">
+            <image class="food-item-img" mode="aspectFill" src="{{item.picture?item.picture:'/img/icons/no-shopImg.png'}}"></image>
+            <view class="no-sale-style" wx:if="{{item.status!==0}}"></view>
+            <view class="sold-out flex-center" wx:if="{{item.status===1}}"> 已售罄 </view>
+        </view>
+        <view class="food-info-wrap">
+            <view class="food-info">
+                <view bindtap="showProductInfo" class="food-info-wrap-wrap" data-item="{{item}}" id="spu-{{tag}}-{{item.id}}">
+                    <view class="food-item-header {{item.highlight?'food-item-focus':''}}">{{item.name}}</view>
+                    <view class="food-description" wx:if="{{item.description}}">{{item.description}}</view>
+                    <view class="food-item-sales-info">月售{{item.month_saled||0}} 赞{{item.praise_num_new||0}}</view>
+                </view>
+                <view class="flex-two-side">
+                    <view bindtap="showProductInfo" class="food-item-price-info" data-item="{{item}}" id="spu-{{tag}}-{{item.id}}">
+                        <text class="food-item-price {{item.status===0?'':'no-sale-color'}}">¥{{item.skus[0].price}}</text>
+                        <text class="food-item-origin-price" wx:if="{{item.skus[0].price!=item.skus[0].origin_price}}">¥{{item.skus[0].origin_price}}</text>
+                        <text class="food-item-unit" wx:if="{{item.unit!==''&&item.unit!=='份'}}">/{{item.unit}}</text>
+                    </view>
+                    <food-count-unit bind:onClickAddFood="onClickAddFood" bind:onClickChooseFood="onClickChooseFood" bind:onClickDelFood="onClickDelFood" cartCountMap="{{cartCountMap}}" foodItem="spu" foodStatus="{{item.status}}" item="{{item}}" poiStatus="{{poiData.poi_info.status}}"></food-count-unit>
+                </view>
+            </view>
+            <view class="spu-tag-container">
+                <view class="food-item-tip ellipsis" wx:if="{{item.skus[0].promotion_info}}"> {{item.skus[0].promotion_info}} </view>
+                <view class="food-item-tip" wx:elif="{{item.skus[0].min_order_count>1}}"> {{item.skus[0].min_order_count}}份起购 </view>
+                <image class="food-item-tip-img" src="{{tag.picture_url}}" style="height: {{tag.height/2}}px; width: {{tag.width/2}}px;" wx:for="{{item.product_label_picture_list}}" wx:for-item="tag" wx:key="{{index}}"></image>
+            </view>
+        </view>
+    </view>
+</template>

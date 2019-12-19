@@ -1,0 +1,196 @@
+<template name="jump-img">
+    <image class="jump-btn" src="/img/icons/jump.png"></image>
+</template>
+<import src="picker/address.wxml"></import>
+<import src="picker/poi-coupon.wxml"></import>
+<import src="picker/coupon.wxml"></import>
+<import src="picker/arrival-time.wxml"></import>
+<import src="picker/option-picker.wxml"></import>
+<import src="privacy/privacy.wxml"></import>
+<import src="privacy/privacy-modal.wxml"></import>
+<view class="page-container-flex {{inited?'show':''}}">
+    <include src="../base.wxml"></include>
+    <view class="error-tip" hidden="{{!formValidState}}"> {{formValidState==='no-address'?'收货地址未填写':''}}{{formValidState==='no-time'?isSelfpick?'请选择自取时间':'请选择配送时间':''}} </view>
+    <view class="scroll-container">
+        <scroll-view class="scroll-content" scrollTop="{{scrollTop}}" scrollY="{{!addressSelectShow}}">
+            <view bind:tap="onClickUserInfoHeader" class="flex-row userinfo-header" wx:if="{{isSupportSelfpick}}">
+                <view class="userinfo-header-item {{isSelfpick?'':'bold'}}" data-action="deliver">外卖配送</view>
+                <view class="userinfo-header-item {{isSelfpick?'bold':''}}" data-action="selfpick">到店自取</view>
+                <image class="userinfo-header-leftbg" hidden="{{isSelfpick}}" src="../../img/icons/userinfo_header_bg_left.png"></image>
+                <image class="userinfo-header-rightbg" hidden="{{!isSelfpick}}" src="../../img/icons/userinfo_header_bg_right.png"></image>
+            </view>
+            <view class="userinfo-header-bg" wx:if="{{isSupportSelfpick}}"></view>
+            <view class="preview-block flex-column selfpick-info" wx:if="{{isSelfpick}}">
+                <view class="flex-cloumn">
+                    <view>商家地址</view>
+                    <view class="selfpick-shop-position bold">{{selfpickShopAddress}}</view>
+                    <view class="selfpick-position-info flex-row">
+                        <view class="bold" wx:if="{{distance}}">距您{{distance}}</view>
+                        <view class="dividing-line" wx:if="{{distance}}"></view>
+                        <view bind:tap="onClickCheckMap" class="bold blue">查看地图</view>
+                    </view>
+                </view>
+                <view class="dividing-line-row"></view>
+                <view class="flex-row selfpick-userinfo">
+                    <view bind:tap="onClickArrivalTime" class="flex-column"> 自取时间 <view class="font-bold">
+                            <text class="margin-right-11">{{selfpickTime}}</text>
+                            <template is="jump-img" data></template>
+                        </view>
+                    </view>
+                    <view class="flex-column selfpick-userinfo-block"> 预留电话 <view class="flex-row flex-center font-bold">
+                            <input bind:blur="onChangeSelfpickTel" class="telInputStyle" focus="{{isEditingTel}}" maxlength="11" type="number" value="{{selfpickTel}}"></input>
+                            <template is="jump-img" data></template>
+                        </view>
+                    </view>
+                </view>
+                <view class="dividing-line-row"></view>
+                <view class="flex-row selfpick-agreement-info letter-spacing-04">
+                    <checkbox-group bindchange="onSelfpickAgreementChange">
+                        <label class="checkbox margin-right-20">
+                            <checkbox checked="{{isAgreeSelfpick}}"></checkbox>
+                        </label>
+                    </checkbox-group> 同意 <view bind:tap="onClickSelfpickAgreement" class="selfpick-agreement">《到店自取用户协议》</view>
+                </view>
+            </view>
+            <view class="{{isSupportSelfpick?'compatiple-with-selfpick':'info-box'}} preview-block " wx:else>
+                <view class="user-info preview-addr-info {{previewData.address_type!==1&&previewData.address_type!==2?'preview-addr-add':''}}">
+                    <view bindtap="onClickSelectAddr" class="have-address" data-address-type="{{previewData.address_type}}" wx:if="{{previewData.address_type===1}}">
+                        <image class="loc-icon" src="/img/icons/locate.png"></image>
+                        <view class="user-info-content">
+                            <view class="user-address"> {{previewData.address_info.address}} {{previewData.address_info.house_number}} </view>
+                            <view class="user-info-basic">
+                                <view class="user-name-txt" hidden="{{!previewData.address_info.name}}"> {{previewData.address_info.name}} </view>
+                                <view class="user-gender" hidden="{{!previewData.address_info.name}}"> {{previewData.address_info.gender}} </view>
+                                <view class="user-phone-number"> {{previewData.address_info.phone}} </view>
+                            </view>
+                        </view>
+                        <template is="jump-img" data></template>
+                    </view>
+                    <view bindtap="onClickSelectAddr" class="address choose-address" data-address-type="{{previewData.address_type}}" wx:elif="{{previewData.address_type===2}}">
+                        <view class="choose-address-content">
+                            <image class="choose-address-icon" src="/img/icons/near-active.png"></image>
+                            <text class="choose-address-txt">选择收货地址</text>
+                        </view>
+                        <template is="jump-img" data></template>
+                    </view>
+                    <wm-navigator bindnavtap="lxAddrClick" url="../addr-add/addr-add?from=preview&poi_id={{poi_id}}" wx:else>
+                        <view class="address add-address">
+                            <image class="address-icon add-address-icon" src="/img/icons/add-addr.png"></image>
+                            <text class="add-address-txt">新增收货地址</text>
+                        </view>
+                    </wm-navigator>
+                </view>
+                <view bindtap="onClickArrivalTime" class="arrive-info" wx:if="{{previewData.pre_order===1}}">
+                    <image class="time-icon" src="/img/icons/time.png"></image>
+                    <view class="arrive-time">{{previewData.expected_arrival_info.date_type_tip}} <view class="arrive-estimate"> {{previewData.expected_arrival_info.unixtime===-1?'(未选择)':previewData.expected_arrival_info.select_view_time}} </view>
+                    </view>
+                    <template is="jump-img" data></template>
+                </view>
+                <view bindtap="{{previewData.expected_arrival_info.clickable?'onClickArrivalTime':''}}" class="arrive-info" wx:else>
+                    <image class="time-icon" src="/img/icons/time.png"></image>
+                    <view class="arrive-time">{{previewData.expected_arrival_info.date_type_tip}} <text class="arrive-estimate"> {{previewData.expected_arrival_info.select_view_time}} </text>
+                    </view>
+                    <template is="jump-img" data wx:if="{{previewData.expected_arrival_info.clickable}}"></template>
+                </view>
+            </view>
+            <view class="preview-block">
+                <view class="order-header {{isInSharing?'pindan-header':''}}">
+                    <view class="shop-icon-container" wx:if="{{!isInSharing}}">
+                        <image class="shop-icon" mode="aspectFill" src="{{previewData.poi_icon}}"></image>
+                    </view>
+                    <view class="shop-name">{{previewData.poi_name}}</view>
+                    <block wx:if="{{!isSelfpick}}">
+                        <view class="mt-shipping" wx:if="{{previewData.delivery_type==1}}">美团专送</view>
+                        <view class="shop-shipping" wx:if="{{previewData.delivery_type!=1}}">商家自配</view>
+                    </block>
+                    <view class="selfpick-tag" wx:if="{{isSelfpick}}">支持自取</view>
+                </view>
+                <wm-detail-list bind:closeupLogClickEvent="lxShowCloseClick" bind:closeupLogViewEvent="lxShowCloseView" bind:expandLogClickEvent="lxShowMoreClick" bind:expandLogViewEvent="lxShowMoreView" bind:scrollTopEvent="handleScrollTop" closeUpAnim="Boolean(true)" closeupWord="点击收起" expandWord="展示更多" list="{{foodlistSortByPerson}}" noSeparate="Boolean(true)"></wm-detail-list>
+                <view class="dvd-line" wx:if="{{isInSharing}}"></view>
+                <view class="fee-list">
+                    <view class="fee-list-item">
+                        <text class="fee-name">包装费</text>
+                        <text class="fee-price">¥{{previewData._box_total_price}}</text>
+                    </view>
+                    <view class="fee-list-item">
+                        <text class="fee-name">配送费</text>
+                        <text class="fee-price">¥{{previewData._shipping_fee}}</text>
+                    </view>
+                </view>
+                <view class="dvd-line" wx:if="{{!isInSharing}}"></view>
+                <view class="discounts" wx:if="{{previewData.discounts.length}}">
+                    <view class="discounts-item" wx:for="{{previewData.discounts}}" wx:key="{{index}}">
+                        <image class="discounts-item-img" src="{{item.icon_url}}" wx:if="{{item.icon_url}}"></image>
+                        <view class="discounts-item-text"> {{item.name}} </view>
+                        <view class="discounts-item-price"> {{item.info}} </view>
+                    </view>
+                </view>
+                <view bindtap="{{coupon_info.usable===1?'onClickGrabCoupon':''}}" class="preview-row" hidden="{{isSelfpick}}"> 美团红包 <text class="preview-row-text-right disabled" wx:if="{{coupon_info.usable===0}}">{{coupon_info.status_tip}}</text>
+                    <block wx:elif="{{coupon_info.usable===1}}">
+                        <block wx:if="{{coupon_info.selected_coupon_view_id==='0'}}">
+                            <text class="preview-row-text-right disabled">{{coupon_info.status_tip}}</text>
+                            <template is="jump-img" data></template>
+                        </block>
+                        <block wx:else>
+                            <text class="preview-row-text-right selected" wx:if="{{coupon_info.selected_coupon_view_id==='-1'}}">{{coupon_info.status_tip}}</text>
+                            <text class="preview-row-text-right selected" wx:else>{{coupon_info.status_tip}}</text>
+                            <template is="jump-img" data></template>
+                        </block>
+                    </block>
+                </view>
+                <view bindtap="{{poi_coupon_info.usable===1?'onClickGrabPoiCoupon':''}}" class="preview-row"> 商家代金券 <text class="preview-row-text-right disabled" wx:if="{{poi_coupon_info.usable===0}}">{{poi_coupon_info.status_tip}}</text>
+                    <block wx:elif="{{poi_coupon_info.usable===1}}">
+                        <block wx:if="{{poi_coupon_info.selected_coupon_view_id==='0'}}">
+                            <text class="preview-row-text-right disabled">{{poi_coupon_info.status_tip}}</text>
+                            <template is="jump-img" data></template>
+                        </block>
+                        <block wx:else>
+                            <text class="preview-row-text-right selected" wx:if="{{poi_coupon_info.selected_coupon_view_id==='-1'}}">{{poi_coupon_info.status_tip}}</text>
+                            <text class="preview-row-text-right selected" wx:else>{{poi_coupon_info.status_tip}}</text>
+                            <template is="jump-img" data></template>
+                        </block>
+                    </block>
+                </view>
+                <view class="dvd-line"></view>
+                <view class="total-pay">
+                    <view class="total-pay-price"> 小计 <text class="total-pay-pricetxt">¥{{previewData._total}}</text>
+                    </view>
+                    <view class="total-price">
+                        <text class="total-pref" wx:if="{{previewData._discountCents>0}}">已优惠¥{{previewData._discountPrice}}</text>
+                    </view>
+                </view>
+            </view>
+            <template is="privacy-template" data="{{...privacy}}"></template>
+            <view class="preview-block no-bottom-dist">
+                <view bindtap="{{pay_info.length>1?'onClickPayType':''}}" class="preview-row preview-row-border"> 支付方式 <text class="preview-row-text-right">{{payType===1?'货到付款':'在线支付'}}</text>
+                    <image class="jump-btn" src="/img/icons/jump.png" wx:if="{{pay_info.length>1}}"></image>
+                </view>
+                <view bindtap="onClickCaution" class="preview-row preview-row-border"> 备注 <view class="preview-row-text-right ellipsis {{cautionValue?'':'disabled'}}"> {{cautionValue||previewData.remark_field.hint||'口味、偏好等要求'}} </view>
+                    <template is="jump-img" data></template>
+                </view>
+                <view bindtap="onClickDinersOption" class="preview-row" wx:if="{{previewData.diners_option.length>0}}"> 餐具数量 <view class="preview-row-text-right preview-row-dinner-option ellipsis {{diners_option_value?'':'disabled'}}">
+                        <image class="eco-icon-pure" src="/img/icons/eco-icon.png" wx:if="{{!!diners_option_value&&diners_count===99}}"></image>
+                        <view class="default_tableware_tip" wx:if="{{!diners_option_value}}">
+                            <image class="eco-icon" src="/img/icons/eco-icon-pure.png"></image>{{previewData.default_tableware_tip}}</view> {{diners_option_value||'未选择'}} </view>
+                    <template is="jump-img" data></template>
+                </view>
+            </view>
+            <view class="separate_line"></view>
+        </scroll-view>
+    </view>
+    <view class="tip-sec {{isTipLengthOverTwo?'two-line':''}}" wx:if="{{tip&&payType!=1}}">
+        <image class="tip-icon" src="/img/icons/alert.png"></image>
+        <text class="tip-text">{{tip}}</text>
+    </view>
+    <view bindtap="onClickSubmit" class="footer {{isIpx?'footer-ipx':''}}">
+        <text class="weixin-pay">微信支付</text>
+        <text class="wait-pay-price">¥{{previewData._total}}</text>
+        <text class="pay-save" wx:if="{{previewData._discountCents>0}}">已优惠¥{{previewData._discountPrice}}</text>
+    </view>
+    <template is="privacy-modal" data="{{show:privacy.showIntro}}"></template>
+    <template is="picker-address" data="{{show:addressSelectShow,addresses:addresses,poi_id:poi_id,activeID:previewData.address_info&&previewData.address_info.id,hasUndoneAddr:hasUndoneAddr,canNotShippingAddr:canNotShippingAddr}}"></template>
+    <template is="picker-poi-coupon" data="{{ show:poiCouponModalShown,expiredFold:expiredFold,togglePoiReason:togglePoiReason,activeID:poi_coupon_info.selected_coupon_view_id,valid:poiCouponlist&&poiCouponlist.validPoiCoupon||[],invalid:poiCouponlist&&poiCouponlist.invalidPoiCoupon||[],expired:poiCouponlist&&poiCouponlist.expiredPoiCoupon||[] }}"></template>
+    <template is="picker-coupon" data="{{ show:couponModalShown,activeID:coupon_info.selected_coupon_view_id,disableReasons:couponDisableReasons,expires:expiredCoupons,expiresCount:expiredCouponCount,valid:couponlist&&couponlist.valid||[],invalid:couponlist&&couponlist.invalid||[] }}"></template>
+    <template is="arrival-time" data="{{...arrivalTime}}"></template>
+    <template is="option-picker" data="{{...dinnerOption}}"></template>
+</view>

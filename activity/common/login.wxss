@@ -1,0 +1,64 @@
+.captureInputBox {
+    position: relative;
+}
+
+.captureInputBox .login_mobile_countdown,.captureInputBox .clear-phone {
+    position: absolute;
+    width: 60rpx;
+    height: 40rpx;
+    font-size: 28rpx;
+    line-height: 40rpx;
+    text-align: center;
+    right: 60rpx;
+    top: 30rpx;
+    color: #AEAEAE;
+    z-index: 1200;
+}
+
+.captureInputBox .clear-phone {
+    width: 30rpx;
+    height: 30rpx;
+    top: 35rpx;
+    background: url('data:image/png;charset=utf-8;base64,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') no-repeat;
+    background-size: 100%;
+}
+
+.captureInputBox .login_mobile_countdown.re_get {
+    width: 120rpx;
+    color: #333;
+    font-size: 28rpx;
+}
+
+.loginCaptch {
+    height: 66rpx;
+    width: 200rpx;
+    display: block;
+    margin: 0 auto 30rpx;
+}
+
+.loginMobileTips {
+    color: #999999;
+    font-size: 24rpx;
+    line-height: 33rpx;
+    height: 66rpx;
+    margin: 0 auto 30rpx;
+    width: 480rpx;
+}
+
+.loginMobileInput {
+    width: 458rpx;
+    padding-left: 20rpx;
+    margin: 0 auto 10rpx;
+    background: #f4f4f4;
+    height: 80rpx;
+    font-size: 32rpx;
+    border-radius: 4rpx;
+}
+
+.loginMobileInputBar {
+    position: relative;
+    margin: 0 auto 10rpx;
+    width: 480rpx;
+    border: 1rpx solid #C4C4C4;
+    height: 80rpx;
+}
